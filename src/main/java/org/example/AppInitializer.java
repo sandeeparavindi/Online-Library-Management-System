@@ -13,9 +13,9 @@ public class AppInitializer extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent rootNode = FXMLLoader.load(this.getClass().getResource("/view/SignUp_form.fxml"));
+        Parent rootNode = FXMLLoader.load(this.getClass().getResource("/view/SignIn_form.fxml"));
         Scene scene = new Scene(rootNode);
-        primaryStage.setTitle("Sign Up");
+        primaryStage.setTitle("Sign In");
         primaryStage.centerOnScreen();
         primaryStage.setScene(scene);
         primaryStage.show();

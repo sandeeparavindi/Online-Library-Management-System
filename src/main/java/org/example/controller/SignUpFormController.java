@@ -47,7 +47,7 @@ public class SignUpFormController {
                 if (saved) {
                     new Alert(Alert.AlertType.CONFIRMATION, "user Saved").show();
                 } else {
-                    new Alert(Alert.AlertType.ERROR, "user  not saved").show();
+                    new Alert(Alert.AlertType.ERROR, "user not saved").show();
                 }
             }else {
                 new Alert(Alert.AlertType.WARNING, "Already exist ").show();
@@ -67,6 +67,6 @@ public class SignUpFormController {
         Stage stage = (Stage) root.getScene().getWindow();
 
         stage.setScene(scene);
-        stage.setTitle("Sign-Up Form");
+        stage.setTitle("Sign-Ip Form");
     }
 }

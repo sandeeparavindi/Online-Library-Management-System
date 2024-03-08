@@ -5,6 +5,7 @@ import org.example.repository.Custom.UserRepository;
 import org.example.util.SessionFactoryConfig;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -47,6 +48,17 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public boolean isExistUser(String userName, String pw) throws SQLException, ClassNotFoundException {
-        return false;
+        Session session = SessionFactoryConfig.getInstance().getSession();
+        try {
+            session.beginTransaction();
+            Query<User> query = session.createQuery("FROM User WHERE name = :userName AND password = :password", User.class);
+            query.setParameter("userName", userName);
+            query.setParameter("password", pw);
+            List<User> resultList = query.getResultList();
+            session.getTransaction().commit();
+            return !resultList.isEmpty();
+        } finally {
+            session.close();
+        }
     }
 }

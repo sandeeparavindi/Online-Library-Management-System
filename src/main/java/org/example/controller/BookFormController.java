@@ -12,16 +12,10 @@ public class BookFormController {
     private TableColumn<?, ?> colAuthor;
 
     @FXML
-    private TableColumn<?, ?> colAvailability;
-
-    @FXML
     private TableColumn<?, ?> colGenre;
 
     @FXML
     private TableColumn<?, ?> colTittle;
-
-    @FXML
-    private JFXComboBox<?> combStatus;
 
     @FXML
     private TableView<?> tblBook;
@@ -31,6 +25,9 @@ public class BookFormController {
 
     @FXML
     private TextField txtGenre;
+
+    @FXML
+    private TextField txtId;
 
     @FXML
     private TextField txtTittle;
@@ -56,7 +53,7 @@ public class BookFormController {
     }
 
     @FXML
-    void txtSerachOnAction(ActionEvent event) {
+    void txtSearchOnAction(ActionEvent event) {
 
     }
 
