@@ -1,5 +1,6 @@
 package org.example.repository;
 
+import org.example.repository.Custom.Impl.BookRepositoryImpl;
 import org.example.repository.Custom.Impl.UserRepositoryImpl;
 
 public class RepositoryFactory {
@@ -19,13 +20,15 @@ public class RepositoryFactory {
     }
 
     public enum RepositoryTypes {
-        USER
+        USER, BOOK
     }
 
     public SuperRepository getRepo(RepositoryTypes type) {
         switch (type) {
             case USER:
                 return new UserRepositoryImpl();
+            case BOOK:
+                return new BookRepositoryImpl();
             default:
                 throw new IllegalArgumentException("Unknown repository type: " + type);
         }

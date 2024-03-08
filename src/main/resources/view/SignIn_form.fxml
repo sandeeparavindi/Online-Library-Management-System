@@ -40,7 +40,7 @@
             <Font name="Times New Roman" size="14.0" />
          </font>
       </TextField>
-      <JFXButton buttonType="RAISED" layoutX="775.0" layoutY="481.0" onAction="#btnLoginOnAction" prefHeight="26.0" prefWidth="298.0" style="-fx-background-color: D0D4CA; -fx-background-radius: 20px;" text="LogIn">
+      <JFXButton buttonType="RAISED" layoutX="775.0" layoutY="481.0" onAction="#btnLoginOnAction" prefHeight="26.0" prefWidth="298.0" style="-fx-background-color: D0D4CA; -fx-background-radius: 20px;" text="SignIn">
          <font>
             <Font name="Times New Roman Bold" size="14.0" />
          </font>
