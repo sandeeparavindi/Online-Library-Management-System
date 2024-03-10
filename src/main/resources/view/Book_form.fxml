@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -22,14 +23,14 @@
             <Font name="Times New Roman Bold" size="22.0" />
          </font>
       </Label>
-      <AnchorPane layoutX="35.0" layoutY="115.0" opacity="0.77" prefHeight="243.0" prefWidth="805.0" style="-fx-background-color: #000000; -fx-background-radius: 20px;">
+      <AnchorPane layoutX="35.0" layoutY="115.0" opacity="0.77" prefHeight="278.0" prefWidth="805.0" style="-fx-background-color: #000000; -fx-background-radius: 20px;">
          <children>
-            <TextField fx:id="txtId" layoutX="25.0" layoutY="46.0" onAction="#txtSearchOnAction" prefHeight="49.0" prefWidth="230.0" promptText="Book ID">
+            <TextField fx:id="txtId" layoutX="25.0" layoutY="46.0" onAction="#txtSearchOnAction" prefHeight="49.0" prefWidth="230.0" promptText=" Book ID : 0001">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtAuthor" layoutX="545.0" layoutY="122.0" prefHeight="49.0" prefWidth="230.0" promptText="Author">
+            <TextField fx:id="txtAuthor" layoutX="25.0" layoutY="119.0" prefHeight="49.0" prefWidth="230.0" promptText="Author">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -39,22 +40,22 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </TextField>
-            <JFXButton buttonType="RAISED" layoutX="37.0" layoutY="167.0" onAction="#btnAddOnAction" prefHeight="49.0" prefWidth="99.0" style="-fx-background-color: #FFFFFF;" text="ADD">
+            <JFXButton buttonType="RAISED" layoutX="319.0" layoutY="197.0" onAction="#btnAddOnAction" prefHeight="49.0" prefWidth="99.0" style="-fx-background-color: #FFFFFF;" text="ADD">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </JFXButton>
-            <JFXButton buttonType="RAISED" layoutX="153.0" layoutY="167.0" onAction="#btnUpdateOnAction" prefHeight="49.0" prefWidth="99.0" style="-fx-background-color: #FFFFFF;" text="UPDATE">
+            <JFXButton buttonType="RAISED" layoutX="435.0" layoutY="197.0" onAction="#btnUpdateOnAction" prefHeight="49.0" prefWidth="99.0" style="-fx-background-color: #FFFFFF;" text="UPDATE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </JFXButton>
-            <JFXButton buttonType="RAISED" layoutX="267.0" layoutY="167.0" onAction="#btnDeleteOnAction" prefHeight="49.0" prefWidth="99.0" style="-fx-background-color: #FFFFFF;" text="DELETE">
+            <JFXButton buttonType="RAISED" layoutX="549.0" layoutY="197.0" onAction="#btnDeleteOnAction" prefHeight="49.0" prefWidth="99.0" style="-fx-background-color: #FFFFFF;" text="DELETE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </JFXButton>
-            <JFXButton buttonType="RAISED" layoutX="385.0" layoutY="167.0" onAction="#btnClearOnAction" prefHeight="49.0" prefWidth="99.0" style="-fx-background-color: #FFFFFF;" text="CLEAR">
+            <JFXButton buttonType="RAISED" layoutX="667.0" layoutY="197.0" onAction="#btnClearOnAction" prefHeight="49.0" prefWidth="99.0" style="-fx-background-color: #FFFFFF;" text="CLEAR">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -64,9 +65,10 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </TextField>
+            <JFXComboBox focusColor="WHITE" layoutX="288.0" layoutY="119.0" prefHeight="49.0" prefWidth="230.0" promptText="Select Branch of book" style="-fx-background-color: #ffffff;" />
          </children>
       </AnchorPane>
-      <TableView fx:id="tblBook" layoutX="105.0" layoutY="387.0" opacity="0.71" prefHeight="350.0" prefWidth="666.0">
+      <TableView fx:id="tblBook" layoutX="105.0" layoutY="412.0" opacity="0.71" prefHeight="350.0" prefWidth="666.0">
         <columns>
           <TableColumn fx:id="colId" prefWidth="134.0" text="Book ID" />
           <TableColumn fx:id="colTittle" prefWidth="186.0" text="Tittle" />

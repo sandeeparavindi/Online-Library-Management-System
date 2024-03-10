@@ -40,8 +40,11 @@ public class AdminDashboardFormController {
     }
 
     @FXML
-    void btnBranchOnAction(ActionEvent event) {
-
+    void btnBranchOnAction(ActionEvent event) throws IOException {
+        this.pane.getChildren().clear();
+        this.pane.getChildren().add(
+                FXMLLoader.load(this.getClass().getResource("/view/Branch_form.fxml"))
+        );
     }
 
     @FXML

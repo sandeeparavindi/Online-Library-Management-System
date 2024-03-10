@@ -1,6 +1,5 @@
 package org.example.controller;
 
-import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -47,7 +46,8 @@ public class BookFormController {
     @FXML
     private TextField txtTittle;
 
-    BookService bookService = (BookService) ServiceFactory.getServiceFactory().getService(ServiceFactory.ServiceTypes.BOOK);
+    BookService bookService = (BookService) ServiceFactory.getServiceFactory()
+            .getService(ServiceFactory.ServiceTypes.BOOK);
 
     public void initialize() {
         setCellValueFactory();
@@ -156,17 +156,56 @@ public class BookFormController {
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
+        String id = txtId.getText();
 
+        try {
+            boolean isDeleted = bookService.deleteBook(id);
+
+            if (isDeleted) {
+                tblBook.refresh();
+                new Alert(Alert.AlertType.CONFIRMATION, "book deleted!").show();
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
     }
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
+        int id = Integer.parseInt(txtId.getText());
+        String tittle = txtTittle.getText();
+        String genre = txtGenre.getText();
+        String author = txtAuthor.getText();
+
+        var dto = new BookDto(id, tittle, genre, author);
+
+        try {
+            boolean isUpdated = bookService.updateBook(dto);
+            System.out.println(isUpdated);
+            if(isUpdated) {
+                new Alert(Alert.AlertType.CONFIRMATION, "book updated!").show();
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
 
     }
 
     @FXML
     void txtSearchOnAction(ActionEvent event) {
+        String id = txtId.getText();
 
+        try {
+            BookDto dto = bookService.searchBook(id);
+
+            if(dto != null) {
+                fiilFields(dto);
+            } else {
+                new Alert(Alert.AlertType.INFORMATION, "book not found!").show();
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
     }
 
     private void fiilFields(BookDto dto){

@@ -16,7 +16,7 @@
    <children>
       <ImageView fitHeight="800.0" fitWidth="1200.0">
          <image>
-            <Image url="@../assets/girl-with-notebooks-pointing-camera.jpg" />
+            <Image url="@../assets/8.jpg" />
          </image>
       </ImageView>
       <BorderPane layoutX="735.0" layoutY="173.0" opacity="0.21" prefHeight="487.0" prefWidth="397.0" style="-fx-background-color: E0F4FF; -fx-background-radius: 10px;" />
