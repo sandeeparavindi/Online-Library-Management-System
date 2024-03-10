@@ -71,11 +71,14 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public List<Book> getAllBooks() throws SQLException {
-        Session session = SessionFactoryConfig.getInstance().getSession();
-        Transaction transaction = session.beginTransaction();
-        List<Book> books = session.createQuery("FROM Book", Book.class).list();
-        transaction.commit();
-        session.close();
-        return books;
+        List<Book> allBooks;
+        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+            Query<Book> query = session.createQuery("FROM Book", Book.class);
+            allBooks = query.getResultList();
+            transaction.commit();
+        }
+        return allBooks;
     }
+
 }
