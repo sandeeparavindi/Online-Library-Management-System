@@ -14,71 +14,175 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public boolean add(Book entity) throws SQLException {
-        Session session = SessionFactoryConfig.getInstance().getSession();
-        Transaction transaction = session.beginTransaction();
-        session.save(entity);
-        transaction.commit();
-        session.close();
-        return true;
+        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+            try {
+                session.save(entity);
+                transaction.commit();
+                return true;
+            } catch (Exception e) {
+                transaction.rollback();
+                throw new SQLException("Failed to add book", e);
+            }
+        }
     }
 
     @Override
     public boolean delete(String id) throws SQLException {
-        Session session = SessionFactoryConfig.getInstance().getSession();
-        Transaction transaction = session.beginTransaction();
-        Book book = session.get(Book.class, id);
-        session.delete(book);
-        transaction.commit();
-        session.close();
-        return true;
+        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+            try {
+                Book book = session.get(Book.class, id);
+                session.delete(book);
+                transaction.commit();
+                return true;
+            } catch (Exception e) {
+                transaction.rollback();
+                throw new SQLException("Failed to delete book", e);
+            }
+        }
     }
 
     @Override
     public boolean update(Book entity) throws SQLException {
-        Session session = SessionFactoryConfig.getInstance().getSession();
-        Transaction transaction = session.beginTransaction();
-        session.update(entity);
-        transaction.commit();
-        session.close();
-        return true;
+        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+            try {
+                session.update(entity);
+                transaction.commit();
+                return true;
+            } catch (Exception e) {
+                transaction.rollback();
+                throw new SQLException("Failed to update book", e);
+            }
+        }
     }
 
     @Override
     public Book search(String id) throws SQLException {
-        Session session = SessionFactoryConfig.getInstance().getSession();
-        Transaction transaction = session.beginTransaction();
-        Book book = session.get(Book.class, id);
-        transaction.commit();
-        session.close();
-        return book;
+        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+            return session.get(Book.class, id);
+        } catch (Exception e) {
+            throw new SQLException("Failed to search for book", e);
+        }
     }
 
     @Override
     public List<Book> loadAll() throws SQLException {
-        return getAllBooks();
+        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+            try {
+                List<Book> allBooks;
+                Query<Book> query = session.createQuery("FROM Book", Book.class);
+                allBooks = query.getResultList();
+                transaction.commit();
+                return allBooks;
+            } catch (Exception e) {
+                transaction.rollback();
+                throw new SQLException("Failed to load all books", e);
+            }
+        }
     }
 
     @Override
     public String totalBookCount() throws SQLException {
-        Session session = SessionFactoryConfig.getInstance().getSession();
-        Transaction transaction = session.beginTransaction();
-        Query<Long> query = session.createQuery("SELECT COUNT(*) FROM Book", Long.class);
-        Long count = query.uniqueResult();
-        transaction.commit();
-        session.close();
-        return count.toString();
+        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+            try {
+                Query<Long> query = session.createQuery("SELECT COUNT(*) FROM Book", Long.class);
+                Long count = query.uniqueResult();
+                transaction.commit();
+                return count.toString();
+            } catch (Exception e) {
+                transaction.rollback();
+                throw new SQLException("Failed to get total book count", e);
+            }
+        }
     }
 
     @Override
     public List<Book> getAllBooks() throws SQLException {
-        List<Book> allBooks;
         try (Session session = SessionFactoryConfig.getInstance().getSession()) {
             Transaction transaction = session.beginTransaction();
-            Query<Book> query = session.createQuery("FROM Book", Book.class);
-            allBooks = query.getResultList();
-            transaction.commit();
+            try {
+                Query<Book> query = session.createQuery("FROM Book", Book.class);
+                List<Book> allBooks = query.getResultList();
+                transaction.commit();
+                return allBooks;
+            } catch (Exception e) {
+                transaction.rollback();
+                throw new SQLException("Failed to get all books", e);
+            }
         }
-        return allBooks;
     }
+
+    //    @Override
+//    public boolean add(Book entity) throws SQLException {
+//        Session session = SessionFactoryConfig.getInstance().getSession();
+//        Transaction transaction = session.beginTransaction();
+//        session.save(entity);
+//        transaction.commit();
+//        session.close();
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean delete(String id) throws SQLException {
+//        Session session = SessionFactoryConfig.getInstance().getSession();
+//        Transaction transaction = session.beginTransaction();
+//        Book book = session.get(Book.class, id);
+//        session.delete(book);
+//        transaction.commit();
+//        session.close();
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean update(Book entity) throws SQLException {
+//        Session session = SessionFactoryConfig.getInstance().getSession();
+//        Transaction transaction = session.beginTransaction();
+//        session.update(entity);
+//        transaction.commit();
+//        session.close();
+//        return true;
+//    }
+//
+//    @Override
+//    public Book search(String id) throws SQLException {
+//        Session session = SessionFactoryConfig.getInstance().getSession();
+//        Transaction transaction = session.beginTransaction();
+//        Book book = session.get(Book.class, id);
+//        transaction.commit();
+//        session.close();
+//        return book;
+//    }
+//
+//    @Override
+//    public List<Book> loadAll() throws SQLException {
+//        return getAllBooks();
+//    }
+//
+//    @Override
+//    public String totalBookCount() throws SQLException {
+//        Session session = SessionFactoryConfig.getInstance().getSession();
+//        Transaction transaction = session.beginTransaction();
+//        Query<Long> query = session.createQuery("SELECT COUNT(*) FROM Book", Long.class);
+//        Long count = query.uniqueResult();
+//        transaction.commit();
+//        session.close();
+//        return count.toString();
+//    }
+//
+//    @Override
+//    public List<Book> getAllBooks() throws SQLException {
+//        List<Book> allBooks;
+//        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+//            Transaction transaction = session.beginTransaction();
+//            Query<Book> query = session.createQuery("FROM Book", Book.class);
+//            allBooks = query.getResultList();
+//            transaction.commit();
+//        }
+//        return allBooks;
+//    }
 
 }

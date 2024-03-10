@@ -1,6 +1,7 @@
 package org.example.util;
 
 import org.example.entity.Book;
+import org.example.entity.Branch;
 import org.example.entity.User;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -20,6 +21,7 @@ public class SessionFactoryConfig {
                 .mergeProperties(getProperties())
                 .addAnnotatedClass(User.class)
                 .addAnnotatedClass(Book.class)
+                .addAnnotatedClass(Branch.class)
                 .buildSessionFactory();
     }
 

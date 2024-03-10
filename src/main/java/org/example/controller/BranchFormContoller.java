@@ -58,4 +58,10 @@ public class BranchFormContoller {
 
     }
 
+    @FXML
+    void txtSearchOnAction(ActionEvent event) {
+
+    }
+
+
 }
