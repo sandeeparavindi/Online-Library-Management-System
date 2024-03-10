@@ -6,6 +6,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import org.example.tm.BranchTm;
 
 public class BranchFormContoller {
     @FXML
@@ -24,7 +25,7 @@ public class BranchFormContoller {
     private AnchorPane pane;
 
     @FXML
-    private TableView<?> tblBranch;
+    private TableView<BranchTm> tblBranch;
 
     @FXML
     private TextField txtBranchName;

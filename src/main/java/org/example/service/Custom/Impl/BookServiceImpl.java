@@ -12,7 +12,8 @@ import java.util.List;
 
 public class BookServiceImpl implements BookService {
 
-    BookRepository bookRepository = (BookRepository) RepositoryFactory.getRepositoryFactory().getRepo(RepositoryFactory.RepositoryTypes.BOOK);
+    BookRepository bookRepository = (BookRepository) RepositoryFactory.getRepositoryFactory()
+            .getRepo(RepositoryFactory.RepositoryTypes.BOOK);
     @Override
     public List<BookDto> getAllBooks() throws SQLException {
         List<Book> allBooks = bookRepository.getAllBooks();

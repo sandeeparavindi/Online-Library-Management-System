@@ -81,4 +81,9 @@ public class BranchRepositoryImpl implements BranchRepository {
             }
         }
     }
+
+    @Override
+    public String totalBranchCount() throws SQLException {
+        return null;
+    }
 }
