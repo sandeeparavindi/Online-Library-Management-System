@@ -10,18 +10,16 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import org.example.dto.BookDto;
 import org.example.dto.BranchDto;
 import org.example.service.Custom.BranchService;
 import org.example.service.ServiceFactory;
-import org.example.tm.BookTm;
 import org.example.tm.BranchTm;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class BranchFormContoller {
+public class BranchFormController {
     @FXML
     private TableColumn<?, ?> colBranchName;
 

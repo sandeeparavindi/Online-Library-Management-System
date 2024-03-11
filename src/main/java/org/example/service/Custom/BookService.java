@@ -1,6 +1,7 @@
 package org.example.service.Custom;
 
 import org.example.dto.BookDto;
+import org.example.dto.BranchDto;
 import org.example.service.SuperService;
 
 import java.sql.SQLException;
@@ -12,4 +13,5 @@ public interface BookService extends SuperService {
     boolean deleteBook(String id) throws SQLException;
     boolean updateBook(final BookDto dto) throws SQLException;
     BookDto searchBook(String id) throws SQLException;
+    List<BranchDto> loadAllBranches() throws SQLException;
 }

@@ -1,8 +1,11 @@
 package org.example.service.Custom.Impl;
 
 import org.example.dto.BookDto;
+import org.example.dto.BranchDto;
 import org.example.entity.Book;
+import org.example.entity.Branch;
 import org.example.repository.Custom.BookRepository;
+import org.example.repository.Custom.BranchRepository;
 import org.example.repository.RepositoryFactory;
 import org.example.service.Custom.BookService;
 
@@ -14,6 +17,10 @@ public class BookServiceImpl implements BookService {
 
     BookRepository bookRepository = (BookRepository) RepositoryFactory.getRepositoryFactory()
             .getRepo(RepositoryFactory.RepositoryTypes.BOOK);
+
+    BranchRepository branchRepository = (BranchRepository) RepositoryFactory.getRepositoryFactory()
+            .getRepo(RepositoryFactory.RepositoryTypes.BRANCH);
+
     @Override
     public List<BookDto> getAllBooks() throws SQLException {
         List<Book> allBooks = bookRepository.getAllBooks();
@@ -25,7 +32,8 @@ public class BookServiceImpl implements BookService {
                             entity.getId(),
                             entity.getTittle(),
                             entity.getGenre(),
-                            entity.getAuthor()
+                            entity.getAuthor(),
+                            entity.getBranch()
                     )
             );
         }
@@ -38,7 +46,8 @@ public class BookServiceImpl implements BookService {
                 dto.getId(),
                 dto.getTittle(),
                 dto.getGenre(),
-                dto.getAuthor()
+                dto.getAuthor(),
+                dto.getBranch()
         );
         return bookRepository.add(entity);
     }
@@ -54,7 +63,8 @@ public class BookServiceImpl implements BookService {
                 dto.getId(),
                 dto.getTittle(),
                 dto.getGenre(),
-                dto.getAuthor()
+                dto.getAuthor(),
+                dto.getBranch()
         );
         return bookRepository.update(entity);
     }
@@ -66,7 +76,26 @@ public class BookServiceImpl implements BookService {
                 entity.getId(),
                 entity.getTittle(),
                 entity.getGenre(),
-                entity.getAuthor()
+                entity.getAuthor(),
+                entity.getBranch()
         );
     }
+
+    @Override
+    public List<BranchDto> loadAllBranches() throws SQLException {
+        List<Branch> branches = branchRepository.loadAll();
+        List<BranchDto> branchDtoList = new ArrayList<>();
+
+        for (Branch entity: branches) {
+            branchDtoList.add(new BranchDto(
+                    entity.getCode(),
+                    entity.getName(),
+                    entity.getManager(),
+                    entity.getLocation()
+            ));
+        }
+        return branchDtoList;
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,6 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.dto.BookDto;
+import org.example.dto.BranchDto;
 import org.example.service.Custom.BookService;
 import org.example.service.ServiceFactory;
 import org.example.tm.BookTm;
@@ -46,12 +48,19 @@ public class BookFormController {
     @FXML
     private TextField txtTittle;
 
+    @FXML
+    private JFXComboBox<String> cmbBranchName;
+
+    @FXML
+    private TableColumn<?, ?> colBranch;
+
     BookService bookService = (BookService) ServiceFactory.getServiceFactory()
             .getService(ServiceFactory.ServiceTypes.BOOK);
 
     public void initialize() {
         setCellValueFactory();
         loadAllBooks();
+        loadAllBranchNames();
     }
 
     private void setCellValueFactory(){
@@ -59,6 +68,7 @@ public class BookFormController {
         colTittle.setCellValueFactory(new PropertyValueFactory<>("tittle"));
         colGenre.setCellValueFactory(new PropertyValueFactory<>("genre"));
         colAuthor.setCellValueFactory(new PropertyValueFactory<>("author"));
+        colBranch.setCellValueFactory(new PropertyValueFactory<>("branch"));
     }
 
     private void loadAllBooks() {
@@ -73,7 +83,8 @@ public class BookFormController {
                                 dto.getId(),
                                 dto.getTittle(),
                                 dto.getGenre(),
-                                dto.getAuthor()
+                                dto.getAuthor(),
+                                dto.getBranch()
                         )
                 );
             }
@@ -100,8 +111,9 @@ public class BookFormController {
             String tittle = txtTittle.getText();
             String genre = txtGenre.getText();
             String author = txtAuthor.getText();
+            String branch = cmbBranchName.getValue();
 
-            var dto = new BookDto(id, tittle, genre, author);
+            var dto = new BookDto(id, tittle, genre, author, branch);
 
             try {
                 boolean isAdd = bookService.addBook(dto);
@@ -176,8 +188,9 @@ public class BookFormController {
         String tittle = txtTittle.getText();
         String genre = txtGenre.getText();
         String author = txtAuthor.getText();
+        String branch = cmbBranchName.getValue();
 
-        var dto = new BookDto(id, tittle, genre, author);
+        var dto = new BookDto(id, tittle, genre, author, branch);
 
         try {
             boolean isUpdated = bookService.updateBook(dto);
@@ -213,6 +226,21 @@ public class BookFormController {
         txtTittle.setText(dto.getTittle());
         txtGenre.setText(dto.getGenre());
         txtAuthor.setText(dto.getAuthor());
+        cmbBranchName.setValue(dto.getBranch());
+    }
+
+    private void loadAllBranchNames(){
+        ObservableList<String> obList = FXCollections.observableArrayList();
+        try {
+            List<BranchDto> branchDtoList = bookService.loadAllBranches();
+
+            for (BranchDto dto:branchDtoList) {
+                obList.add(dto.getName());
+            }
+            cmbBranchName.setItems(obList);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     void clearFields() {
@@ -220,6 +248,7 @@ public class BookFormController {
         txtTittle.setText("");
         txtGenre.setText("");
         txtAuthor.setText("");
+        cmbBranchName.setValue("");
     }
 
 }

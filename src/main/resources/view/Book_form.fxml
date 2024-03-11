@@ -65,7 +65,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </TextField>
-            <JFXComboBox focusColor="WHITE" layoutX="288.0" layoutY="119.0" prefHeight="49.0" prefWidth="230.0" promptText="Select Branch of book" style="-fx-background-color: #ffffff;" />
+            <JFXComboBox fx:id="cmbBranchName" focusColor="WHITE" layoutX="288.0" layoutY="119.0" prefHeight="49.0" prefWidth="230.0" promptText="Select Branch of book" style="-fx-background-color: #ffffff;" />
          </children>
       </AnchorPane>
       <TableView fx:id="tblBook" layoutX="67.0" layoutY="412.0" opacity="0.71" prefHeight="350.0" prefWidth="740.0">
@@ -74,7 +74,7 @@
           <TableColumn fx:id="colTittle" prefWidth="170.0" text="Tittle" />
             <TableColumn fx:id="colGenre" prefWidth="145.0" text="Genre" />
             <TableColumn fx:id="colAuthor" prefWidth="162.0" text="Author" />
-            <TableColumn prefWidth="137.0" text="Branch" />
+            <TableColumn fx:id="colBranch" prefWidth="137.0" text="Branch" />
         </columns>
       </TableView>
    </children>
