@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -20,6 +21,9 @@
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
             <Label layoutX="20.0" layoutY="104.0" text="OverView" textFill="#317e2d">
                <font>
@@ -30,26 +34,41 @@
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
             <JFXButton buttonType="RAISED" layoutX="15.0" layoutY="420.0" onAction="#btnHistoryOnAction" prefHeight="53.0" prefWidth="294.0" style="-fx-background-color: #000000;" text="VIEW HISTORY" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
             <JFXButton buttonType="RAISED" layoutX="15.0" layoutY="485.0" onAction="#btnLogoutOnAction" prefHeight="53.0" prefWidth="294.0" style="-fx-background-color: #000000;" text="LOG OUT" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
             <JFXButton buttonType="RAISED" layoutX="13.0" layoutY="160.0" onAction="#btnHomeOnAction" prefHeight="53.0" prefWidth="294.0" style="-fx-background-color: #000000;" text="HOME" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
             <JFXButton buttonType="RAISED" layoutX="13.0" layoutY="355.0" onAction="#btnUserOnAcrion" prefHeight="53.0" prefWidth="294.0" style="-fx-background-color: #000000;" text="MANAGE USERS" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
          </children>
       </AnchorPane>

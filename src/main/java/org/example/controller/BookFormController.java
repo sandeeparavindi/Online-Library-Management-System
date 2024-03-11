@@ -5,10 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.dto.BookDto;
 import org.example.dto.BranchDto;
@@ -54,6 +51,9 @@ public class BookFormController {
     @FXML
     private TableColumn<?, ?> colBranch;
 
+    @FXML
+    private TableColumn<?, ?> colStatus;
+
     BookService bookService = (BookService) ServiceFactory.getServiceFactory()
             .getService(ServiceFactory.ServiceTypes.BOOK);
 
@@ -69,6 +69,8 @@ public class BookFormController {
         colGenre.setCellValueFactory(new PropertyValueFactory<>("genre"));
         colAuthor.setCellValueFactory(new PropertyValueFactory<>("author"));
         colBranch.setCellValueFactory(new PropertyValueFactory<>("branch"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("btn"));
+
     }
 
     private void loadAllBooks() {
@@ -78,22 +80,31 @@ public class BookFormController {
             List<BookDto> dtoList = bookService.getAllBooks();
 
             for (BookDto dto : dtoList) {
-                obList.add(
-                        new BookTm(
-                                dto.getId(),
-                                dto.getTittle(),
-                                dto.getGenre(),
-                                dto.getAuthor(),
-                                dto.getBranch()
-                        )
+//                obList.add(
+//                        new BookTm(
+//                                dto.getId(),
+//                                dto.getTittle(),
+//                                dto.getGenre(),
+//                                dto.getAuthor(),
+//                                dto.getBranch()
+//                        )
+//                );
+                Button btn = new Button("Available");
+                var tm = new BookTm(
+                        dto.getId(),
+                        dto.getTittle(),
+                        dto.getGenre(),
+                        dto.getAuthor(),
+                        dto.getBranch(),
+                        btn
                 );
+                obList.add(tm);
             }
             tblBook.setItems(obList);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
 
     @FXML
     void btnAddOnAction(ActionEvent event) {

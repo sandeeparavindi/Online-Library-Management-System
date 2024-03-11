@@ -68,13 +68,14 @@
             <JFXComboBox fx:id="cmbBranchName" focusColor="WHITE" layoutX="288.0" layoutY="119.0" prefHeight="49.0" prefWidth="230.0" promptText="Select Branch of book" style="-fx-background-color: #ffffff;" />
          </children>
       </AnchorPane>
-      <TableView fx:id="tblBook" layoutX="67.0" layoutY="412.0" opacity="0.71" prefHeight="350.0" prefWidth="740.0">
+      <TableView fx:id="tblBook" layoutX="17.0" layoutY="410.0" opacity="0.71" prefHeight="350.0" prefWidth="844.0">
         <columns>
-          <TableColumn fx:id="colId" prefWidth="125.0" text="Book ID" />
-          <TableColumn fx:id="colTittle" prefWidth="170.0" text="Tittle" />
-            <TableColumn fx:id="colGenre" prefWidth="145.0" text="Genre" />
-            <TableColumn fx:id="colAuthor" prefWidth="162.0" text="Author" />
-            <TableColumn fx:id="colBranch" prefWidth="137.0" text="Branch" />
+          <TableColumn fx:id="colId" prefWidth="95.0" text="Book ID" />
+          <TableColumn fx:id="colTittle" prefWidth="168.0" text="Tittle" />
+            <TableColumn fx:id="colGenre" prefWidth="123.0" text="Genre" />
+            <TableColumn fx:id="colAuthor" prefWidth="160.0" text="Author" />
+            <TableColumn fx:id="colBranch" prefWidth="144.0" text="Branch" />
+            <TableColumn fx:id="colStatus" prefWidth="153.0" text="Status" />
         </columns>
       </TableView>
    </children>

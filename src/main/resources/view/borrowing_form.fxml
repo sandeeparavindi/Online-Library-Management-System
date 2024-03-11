@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="877.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.BorrowingFormController">
+   <children>
+      <ImageView fitHeight="800.0" fitWidth="877.0">
+         <image>
+            <Image url="@../assets/12.jpg" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="21.0" layoutY="84.0" opacity="0.71" prefHeight="190.0" prefWidth="835.0" style="-fx-background-color: #ffffff; -fx-background-radius: 20px;" />
+      <Label layoutX="42.0" layoutY="42.0" text="Welcome to Borrowing Books">
+         <font>
+            <Font name="Times New Roman Bold" size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="42.0" layoutY="103.0" text="Borrowing ID : ">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblBorrowingId" layoutX="138.0" layoutY="103.0" />
+      <Label layoutX="582.0" layoutY="103.0" text="Date : ">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblBorrowingDate" layoutX="626.0" layoutY="103.0" />
+      <JFXComboBox fx:id="cmbBookTittle" layoutX="41.0" layoutY="134.0" prefHeight="34.0" prefWidth="194.0" promptText="Select tittle of book" />
+      <Label layoutX="323.0" layoutY="143.0" text="Book ID : ">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblBookId" layoutX="389.0" layoutY="143.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="btnAddToCart" buttonType="RAISED" layoutX="541.0" layoutY="196.0" onAction="#btnAddToCartOnAction" prefHeight="33.0" prefWidth="120.0" style="-fx-background-color: #3498db;" text="Add to cart" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton buttonType="RAISED" layoutX="696.0" layoutY="195.0" onAction="#btnBorrowBookOnAction" prefHeight="34.0" prefWidth="120.0" style="-fx-background-color: #34495e;" text="Borrow Book" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <Label layoutX="42.0" layoutY="195.0" text="Return Date : ">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblReturnDate" layoutX="125.0" layoutY="195.0" prefHeight="17.0" prefWidth="0.0" text=" ">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tblBorrowingBooks" layoutX="60.0" layoutY="312.0" opacity="0.78" prefHeight="415.0" prefWidth="755.0">
+        <columns>
+          <TableColumn fx:id="colBorrowingId" prefWidth="126.0" text="Borrowing ID" />
+          <TableColumn fx:id="colBookId" prefWidth="123.0" text="Book ID" />
+            <TableColumn fx:id="colTittle" prefWidth="164.0" text="Tittle" />
+            <TableColumn fx:id="colReturnDate" prefWidth="177.0" text="Return Date" />
+            <TableColumn fx:id="colAction" prefWidth="164.0" text="Action" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

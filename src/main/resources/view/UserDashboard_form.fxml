@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.UserDashboardFormController">
    <children>
@@ -21,6 +21,9 @@
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
             <Label layoutX="20.0" layoutY="104.0" text="OverView" textFill="#317e2d">
                <font>
@@ -31,26 +34,41 @@
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
             <JFXButton buttonType="RAISED" layoutX="15.0" layoutY="420.0" onAction="#btnCredentialOnAction" prefHeight="53.0" prefWidth="294.0" style="-fx-background-color: #000000;" text="CHANGE CREDENTIAL" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
             <JFXButton buttonType="RAISED" layoutX="15.0" layoutY="485.0" onAction="#btnLogoutOnAction" prefHeight="53.0" prefWidth="294.0" style="-fx-background-color: #000000;" text="LOG OUT" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
             <JFXButton buttonType="RAISED" layoutX="13.0" layoutY="160.0" onAction="#btnHomeOnAction" prefHeight="53.0" prefWidth="294.0" style="-fx-background-color: #000000;" text="HOME" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
-            <JFXButton buttonType="RAISED" layoutX="13.0" layoutY="355.0" onAction="#btnReturnOnAcrion" prefHeight="53.0" prefWidth="294.0" style="-fx-background-color: #000000;" text="RETURN BOOKS" textFill="WHITE">
+            <JFXButton buttonType="RAISED" layoutX="13.0" layoutY="355.0" onAction="#btnReturnOnAction" prefHeight="53.0" prefWidth="294.0" style="-fx-background-color: #000000;" text="RETURN BOOKS" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
             <ImageView fitHeight="65.0" fitWidth="82.0" layoutX="13.0" layoutY="11.0">
                <image>

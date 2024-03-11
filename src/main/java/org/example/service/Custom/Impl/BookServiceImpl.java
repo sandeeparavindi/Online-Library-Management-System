@@ -26,7 +26,7 @@ public class BookServiceImpl implements BookService {
         List<Book> allBooks = bookRepository.getAllBooks();
         List<BookDto> bookDtoList = new ArrayList<>();
 
-        for (Book entity: allBooks) {
+        for (Book entity : allBooks) {
             bookDtoList.add(
                     new BookDto(
                             entity.getId(),
@@ -34,7 +34,7 @@ public class BookServiceImpl implements BookService {
                             entity.getGenre(),
                             entity.getAuthor(),
                             entity.getBranch()
-                    )
+                            )
             );
         }
         return bookDtoList;
@@ -86,7 +86,7 @@ public class BookServiceImpl implements BookService {
         List<Branch> branches = branchRepository.loadAll();
         List<BranchDto> branchDtoList = new ArrayList<>();
 
-        for (Branch entity: branches) {
+        for (Branch entity : branches) {
             branchDtoList.add(new BranchDto(
                     entity.getCode(),
                     entity.getName(),
@@ -96,6 +96,5 @@ public class BookServiceImpl implements BookService {
         }
         return branchDtoList;
     }
-
 
 }
