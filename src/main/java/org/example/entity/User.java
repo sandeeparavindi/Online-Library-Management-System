@@ -1,17 +1,17 @@
 package org.example.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Data
 
@@ -27,4 +27,13 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    @ToString.Exclude
+    @OneToMany(targetEntity = BorrowingBook.class, mappedBy = "user")
+    private List<BorrowingBook> borrowingBookList = new ArrayList<>();
+
+    public User(String email, String name, String password) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+    }
 }

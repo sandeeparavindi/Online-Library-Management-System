@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -32,9 +36,14 @@ public class Book {
     @Column(name = "status")
     private String status;
 
+    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "branch_id")
     private Branch branches;
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "book", targetEntity = BorrowingBook.class)
+    List<Book> bookList = new ArrayList<>();
 
     public Book(int id, String tittle, String genre, String author, String branch, String status) {
         this.id = id;

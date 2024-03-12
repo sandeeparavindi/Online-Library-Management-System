@@ -69,10 +69,11 @@
       </Label>
       <TableView fx:id="tblBorrowingBooks" layoutX="60.0" layoutY="312.0" opacity="0.78" prefHeight="425.0" prefWidth="755.0">
         <columns>
-          <TableColumn fx:id="colBorrowingId" prefWidth="146.0" text="Borrowing ID" />
-          <TableColumn fx:id="colBookId" prefWidth="205.0" text="Book ID" />
-            <TableColumn fx:id="colTittle" prefWidth="220.0" text="Tittle" />
-            <TableColumn fx:id="colDueDate" prefWidth="183.0" text="Due Date" />
+          <TableColumn fx:id="colBorrowingId" prefWidth="91.0" text="Borrowing ID" />
+            <TableColumn fx:id="colTittle" prefWidth="127.0" text="Tittle" />
+            <TableColumn fx:id="colDueDate" prefWidth="177.0" text="Due Date" />
+            <TableColumn fx:id="colBookId" prefWidth="127.0" text="Book ID" />
+            <TableColumn fx:id="colUserEmail" prefWidth="232.0" text="User Email" />
         </columns>
       </TableView>
    </children>

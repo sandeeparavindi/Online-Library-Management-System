@@ -30,6 +30,9 @@ public class BorrowingFormController {
     private TableColumn<?, ?> colTittle;
 
     @FXML
+    private TableColumn<?, ?> colUserEmail;
+
+    @FXML
     private Label lblBookId;
 
     @FXML
@@ -42,10 +45,10 @@ public class BorrowingFormController {
     private Label lblDueDate;
 
     @FXML
-    private TableView<?> tblBorrowingBooks;
+    private AnchorPane pane;
 
     @FXML
-    private AnchorPane pane;
+    private TableView<?> tblBorrowingBooks;
 
     @FXML
     void btnBorrowBookOnAction(ActionEvent event) {

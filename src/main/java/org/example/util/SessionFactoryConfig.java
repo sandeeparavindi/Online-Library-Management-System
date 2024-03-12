@@ -1,6 +1,7 @@
 package org.example.util;
 
 import org.example.entity.Book;
+import org.example.entity.BorrowingBook;
 import org.example.entity.Branch;
 import org.example.entity.User;
 import org.hibernate.HibernateException;
@@ -22,6 +23,7 @@ public class SessionFactoryConfig {
                 .addAnnotatedClass(User.class)
                 .addAnnotatedClass(Book.class)
                 .addAnnotatedClass(Branch.class)
+                .addAnnotatedClass(BorrowingBook.class)
                 .buildSessionFactory();
     }
 
