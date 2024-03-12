@@ -53,6 +53,7 @@ public class BookServiceImpl implements BookService {
                 dto.getAuthor(),
                 dto.getBranch(),
                 dto.getStatus()
+
         );
         return bookRepository.add(entity);
     }
@@ -105,3 +106,4 @@ public class BookServiceImpl implements BookService {
     }
 
 }
+

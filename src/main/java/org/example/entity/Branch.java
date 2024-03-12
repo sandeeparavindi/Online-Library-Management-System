@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "branch")
 
@@ -26,4 +29,13 @@ public class Branch {
 
     @Column(name = "branch_location")
     private String location;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "branches")
+    private List<Book> books = new ArrayList<>();
+    public Branch(int code, String name, String manager, String location) {
+        this.code = code;
+        this.name = name;
+        this.manager = manager;
+        this.location = location;
+    }
 }

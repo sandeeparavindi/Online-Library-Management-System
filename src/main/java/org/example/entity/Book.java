@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "book")
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 
 public class Book {
@@ -33,4 +31,21 @@ public class Book {
 
     @Column(name = "status")
     private String status;
+
+    @ManyToOne
+    @JoinColumn(name = "branch_id")
+    private Branch branches;
+
+    public Book(int id, String tittle, String genre, String author, String branch, String status) {
+        this.id = id;
+        this.tittle = tittle;
+        this.genre = genre;
+        this.author = author;
+        this.branch = branch;
+        this.status = status;
+    }
+
+    public Book() {
+
+    }
 }
