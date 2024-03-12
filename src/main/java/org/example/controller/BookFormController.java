@@ -69,7 +69,7 @@ public class BookFormController {
         colGenre.setCellValueFactory(new PropertyValueFactory<>("genre"));
         colAuthor.setCellValueFactory(new PropertyValueFactory<>("author"));
         colBranch.setCellValueFactory(new PropertyValueFactory<>("branch"));
-        colStatus.setCellValueFactory(new PropertyValueFactory<>("btn"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
     }
 
@@ -89,14 +89,16 @@ public class BookFormController {
 //                                dto.getBranch()
 //                        )
 //                );
-                Button btn = new Button("Available");
+//                Button btn = new Button("Available");
+                String status = "Available";
                 var tm = new BookTm(
                         dto.getId(),
                         dto.getTittle(),
                         dto.getGenre(),
                         dto.getAuthor(),
                         dto.getBranch(),
-                        btn
+                        status
+//                        btn
                 );
                 obList.add(tm);
             }
@@ -123,8 +125,9 @@ public class BookFormController {
             String genre = txtGenre.getText();
             String author = txtAuthor.getText();
             String branch = cmbBranchName.getValue();
+            String status = "Available";
 
-            var dto = new BookDto(id, tittle, genre, author, branch);
+            var dto = new BookDto(id, tittle, genre, author, branch, status);
 
             try {
                 boolean isAdd = bookService.addBook(dto);
@@ -200,8 +203,9 @@ public class BookFormController {
         String genre = txtGenre.getText();
         String author = txtAuthor.getText();
         String branch = cmbBranchName.getValue();
+        String status = "Available";
 
-        var dto = new BookDto(id, tittle, genre, author, branch);
+        var dto = new BookDto(id, tittle, genre, author, branch,status);
 
         try {
             boolean isUpdated = bookService.updateBook(dto);

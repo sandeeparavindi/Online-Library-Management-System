@@ -33,7 +33,8 @@ public class BookServiceImpl implements BookService {
                             entity.getTittle(),
                             entity.getGenre(),
                             entity.getAuthor(),
-                            entity.getBranch()
+                            entity.getBranch(),
+                            entity.getStatus()
                             )
             );
         }
@@ -42,12 +43,16 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public boolean addBook(BookDto dto) throws SQLException {
+        if (dto.getStatus() == null || dto.getStatus().isEmpty()) {
+            dto.setStatus("Available");
+        }
         Book entity = new Book(
                 dto.getId(),
                 dto.getTittle(),
                 dto.getGenre(),
                 dto.getAuthor(),
-                dto.getBranch()
+                dto.getBranch(),
+                dto.getStatus()
         );
         return bookRepository.add(entity);
     }
@@ -64,7 +69,8 @@ public class BookServiceImpl implements BookService {
                 dto.getTittle(),
                 dto.getGenre(),
                 dto.getAuthor(),
-                dto.getBranch()
+                dto.getBranch(),
+                dto.getStatus()
         );
         return bookRepository.update(entity);
     }
@@ -77,7 +83,8 @@ public class BookServiceImpl implements BookService {
                 entity.getTittle(),
                 entity.getGenre(),
                 entity.getAuthor(),
-                entity.getBranch()
+                entity.getBranch(),
+                entity.getStatus()
         );
     }
 

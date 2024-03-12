@@ -30,4 +30,7 @@ public class Book {
 
     @Column(name = "branch_name")
     private String branch;
+
+    @Column(name = "status")
+    private String status;
 }

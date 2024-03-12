@@ -15,5 +15,5 @@ public class BookTm {
     private String genre;
     private String author;
     private String branch;
-    private Button btn;
+    private String status;
 }
