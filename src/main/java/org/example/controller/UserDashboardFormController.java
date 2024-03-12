@@ -90,7 +90,10 @@ public class UserDashboardFormController {
 
 
     @FXML
-    void btnViewOnAction(ActionEvent event) {
-
+    void btnViewOnAction(ActionEvent event) throws IOException {
+        this.pane.getChildren().clear();
+        this.pane.getChildren().add(
+                FXMLLoader.load(this.getClass().getResource("/view/ViewBook_form.fxml"))
+        );
     }
 }

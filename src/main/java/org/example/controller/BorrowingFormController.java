@@ -4,20 +4,18 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
+
+import java.io.IOException;
 
 public class BorrowingFormController {
 
     @FXML
-    private JFXButton btnAddToCart;
-
-    @FXML
     private JFXComboBox<?> cmbBookTittle;
-
-    @FXML
-    private TableColumn<?, ?> colAction;
 
     @FXML
     private TableColumn<?, ?> colBookId;
@@ -26,7 +24,7 @@ public class BorrowingFormController {
     private TableColumn<?, ?> colBorrowingId;
 
     @FXML
-    private TableColumn<?, ?> colReturnDate;
+    private TableColumn<?, ?> colDueDate;
 
     @FXML
     private TableColumn<?, ?> colTittle;
@@ -41,18 +39,24 @@ public class BorrowingFormController {
     private Label lblBorrowingId;
 
     @FXML
-    private Label lblReturnDate;
+    private Label lblDueDate;
 
     @FXML
     private TableView<?> tblBorrowingBooks;
 
     @FXML
-    void btnAddToCartOnAction(ActionEvent event) {
-
-    }
+    private AnchorPane pane;
 
     @FXML
     void btnBorrowBookOnAction(ActionEvent event) {
 
+    }
+
+    @FXML
+    void btnViewBookOnAction(ActionEvent event) throws IOException {
+        this.pane.getChildren().clear();
+        this.pane.getChildren().add(
+                FXMLLoader.load(this.getClass().getResource("/view/ViewBook_form.fxml"))
+        );
     }
 }
