@@ -84,8 +84,11 @@ public class UserDashboardFormController {
     }
 
     @FXML
-    void btnReturnOnAction(ActionEvent event) {
-
+    void btnReturnOnAction(ActionEvent event) throws IOException {
+        this.pane.getChildren().clear();
+        this.pane.getChildren().add(
+                FXMLLoader.load(this.getClass().getResource("/view/Return_form.fxml"))
+        );
     }
 
 

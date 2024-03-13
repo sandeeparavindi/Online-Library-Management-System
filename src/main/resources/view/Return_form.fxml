@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="800.0" prefWidth="877.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.ReturnFormController">
+   <children>
+      <ImageView fitHeight="800.0" fitWidth="877.0">
+         <image>
+            <Image url="@../assets/12.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="50.0" layoutY="49.0" text="Welcome to Return Books">
+         <font>
+            <Font name="Times New Roman Bold" size="22.0" />
+         </font>
+      </Label>
+      <JFXButton buttonType="RAISED" layoutX="684.0" layoutY="144.0" onAction="#btnReturnOnAction" prefHeight="34.0" prefWidth="120.0" style="-fx-background-color: #34495e;" text="Return Book" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <Label layoutX="52.0" layoutY="113.0" text="Return ID : ">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblReturnId" layoutX="133.0" layoutY="114.0" />
+      <Label layoutX="466.0" layoutY="113.0" text="Date : ">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblReturnBook" layoutX="519.0" layoutY="113.0" />
+      <JFXComboBox fx:id="cmbId" layoutX="51.0" layoutY="144.0" onAction="#cmbIdOnAction" prefHeight="34.0" prefWidth="194.0" promptText="Select ID of book" />
+   </children>
+</AnchorPane>
