@@ -1,5 +1,6 @@
 package org.example.repository.Custom;
 
+import org.example.entity.Book;
 import org.example.entity.BorrowingBook;
 import org.example.repository.CrudRepository;
 

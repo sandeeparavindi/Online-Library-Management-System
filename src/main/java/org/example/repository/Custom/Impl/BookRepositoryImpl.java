@@ -28,6 +28,23 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     @Override
+    public Book searchByTitle(String title) throws SQLException {
+        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+            try {
+                Query<Book> query = session.createQuery("FROM Book WHERE tittle = :title", Book.class);
+                query.setParameter("title", title);
+                Book book = query.uniqueResult();
+                transaction.commit();
+                return book;
+            } catch (Exception e) {
+                transaction.rollback();
+                throw new SQLException("Failed to search for book by title", e);
+            }
+        }
+    }
+
+    @Override
     public boolean delete(String id) throws SQLException {
         try (Session session = SessionFactoryConfig.getInstance().getSession()) {
             Transaction transaction = session.beginTransaction();
@@ -59,9 +76,9 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     @Override
-    public Book search(String id) throws SQLException {
+    public Book search(String tittle) throws SQLException {
         try (Session session = SessionFactoryConfig.getInstance().getSession()) {
-            return session.get(Book.class, id);
+            return session.get(Book.class, tittle);
         } catch (Exception e) {
             throw new SQLException("Failed to search for book", e);
         }
@@ -114,6 +131,9 @@ public class BookRepositoryImpl implements BookRepository {
                 throw new SQLException("Failed to get all books", e);
             }
         }
+    }
+
+
     }
 
     //    @Override
@@ -185,4 +205,4 @@ public class BookRepositoryImpl implements BookRepository {
 //        return allBooks;
 //    }
 
-}
+

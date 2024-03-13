@@ -1,9 +1,6 @@
 package org.example.service;
 
-import org.example.service.Custom.Impl.BookServiceImpl;
-import org.example.service.Custom.Impl.BranchServiceImpl;
-import org.example.service.Custom.Impl.SignInFormServiceImpl;
-import org.example.service.Custom.Impl.SignUpFromServiceImpl;
+import org.example.service.Custom.Impl.*;
 
 public class ServiceFactory {
     private static ServiceFactory serviceFactory;
@@ -14,7 +11,7 @@ public class ServiceFactory {
     }
 
      public enum ServiceTypes{
-        SIGN_UP_FROM, SIGN_IN_FROM, BOOK, BRANCH
+        SIGN_UP_FROM, SIGN_IN_FROM, BOOK, BRANCH, BORROWING_BOOK
      }
 
      public SuperService getService(ServiceTypes serviceTypes){
@@ -27,6 +24,8 @@ public class ServiceFactory {
                 return new BookServiceImpl();
             case BRANCH:
                 return new BranchServiceImpl();
+            case BORROWING_BOOK:
+                return new BorrowingBookServiceImpl();
             default:
                 return null;
         }
