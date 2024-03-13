@@ -22,7 +22,7 @@ public class BookRepositoryImpl implements BookRepository {
                 return true;
             } catch (Exception e) {
                 transaction.rollback();
-                throw new SQLException("Failed to add book", e);
+                throw new SQLException("Failed to add borrowing book", e);
             }
         }
     }
@@ -40,6 +40,25 @@ public class BookRepositoryImpl implements BookRepository {
             } catch (Exception e) {
                 transaction.rollback();
                 throw new SQLException("Failed to search for book by title", e);
+            }
+        }
+    }
+
+    @Override
+    public boolean updateStatus(String bookId, String status) throws SQLException {
+        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+            try {
+                Book book = session.get(Book.class, bookId);
+                if (book != null) {
+                    book.setStatus(status);
+                    session.update(book);
+                }
+                transaction.commit();
+                return true;
+            } catch (Exception e) {
+                transaction.rollback();
+                throw new SQLException("Failed to update book status", e);
             }
         }
     }

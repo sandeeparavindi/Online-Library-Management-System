@@ -24,7 +24,7 @@ public class ServiceFactory {
                 return new BookServiceImpl();
             case BRANCH:
                 return new BranchServiceImpl();
-            case BORROWING_BOOK:
+           case BORROWING_BOOK:
                 return new BorrowingBookServiceImpl();
             default:
                 return null;

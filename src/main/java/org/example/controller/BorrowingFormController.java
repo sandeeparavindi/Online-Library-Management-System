@@ -7,12 +7,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import org.example.dto.BookDto;
+import org.example.dto.BorrowingBookDto;
+import org.example.repository.Custom.BookRepository;
+import org.example.repository.RepositoryFactory;
 import org.example.service.Custom.BorrowingBookService;
 import org.example.service.ServiceFactory;
 import org.example.tm.BorrowingBookTm;
@@ -62,6 +66,8 @@ public class BorrowingFormController {
 
     BorrowingBookService borrowingBookService = (BorrowingBookService) ServiceFactory.getServiceFactory()
             .getService(ServiceFactory.ServiceTypes.BORROWING_BOOK);
+
+
     public void initialize() {
         setCellValueFactory();
         generateNextBorrowingBookId();
@@ -78,12 +84,22 @@ public class BorrowingFormController {
     }
 
     private void generateNextBorrowingBookId() {
+
         try {
             String bookId = borrowingBookService.generateNextBorrowingBookId();
             lblBorrowingId.setText(bookId);
+
+            LocalDate dueDate = LocalDate.now().plusWeeks(2);
+            lblDueDate.setText(dueDate.toString());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Failed to generate next borrowing ID: " + e.getMessage());
+            alert.showAndWait();
+            e.printStackTrace();
         }
+
     }
 
     private void loadBookTittle() {
@@ -105,10 +121,25 @@ public class BorrowingFormController {
         lblBorrowingDate.setText(date);
     }
 
-
     @FXML
-    void btnBorrowBookOnAction(ActionEvent event) {
+    void btnBorrowBookOnAction(ActionEvent event) throws SQLException {
+        String borrowing_id = lblBorrowingId.getText();
+        String tittle = cmbBookTittle.getValue();
+        String dueDate = lblDueDate.getText();
 
+        BorrowingBookDto bookDto = new BorrowingBookDto(
+                borrowing_id,
+                tittle,
+                dueDate
+        );
+
+
+        boolean isSaved = borrowingBookService.addBorrowBook(bookDto);
+        if (isSaved) {
+            new Alert(Alert.AlertType.CONFIRMATION,"saved").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "can't saved").show();
+        }
     }
 
     @FXML

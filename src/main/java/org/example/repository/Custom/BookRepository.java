@@ -10,4 +10,5 @@ public interface BookRepository extends CrudRepository<Book>{
     String totalBookCount() throws SQLException;
     List<Book> getAllBooks() throws SQLException;
     Book searchByTitle(String title) throws SQLException;
+    boolean updateStatus(String bookId, String status) throws SQLException;
 }

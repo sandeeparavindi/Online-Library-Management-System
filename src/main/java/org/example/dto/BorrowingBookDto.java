@@ -16,6 +16,7 @@ public class BorrowingBookDto {
     private String borrowing_id;
     private String tittle;
     private String dueDate;
+
     @ToString.Exclude
     private String book_id;
     @ToString.Exclude
@@ -26,4 +27,5 @@ public class BorrowingBookDto {
         this.tittle = tittle;
         this.dueDate = dueDate;
     }
+
 }

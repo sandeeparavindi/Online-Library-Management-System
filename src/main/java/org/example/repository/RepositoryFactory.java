@@ -1,7 +1,7 @@
 package org.example.repository;
 
 import org.example.repository.Custom.Impl.BookRepositoryImpl;
-import org.example.repository.Custom.Impl.BorrowingBookImpl;
+import org.example.repository.Custom.Impl.BorrowingBookRepositoryImpl;
 import org.example.repository.Custom.Impl.BranchRepositoryImpl;
 import org.example.repository.Custom.Impl.UserRepositoryImpl;
 
@@ -34,7 +34,7 @@ public class RepositoryFactory {
             case BRANCH:
                 return new BranchRepositoryImpl();
             case BORROWING_BOOK:
-                return new BorrowingBookImpl();
+                return new BorrowingBookRepositoryImpl();
             default:
                 throw new IllegalArgumentException("Unknown repository type: " + type);
         }

@@ -14,4 +14,5 @@ public interface BookService extends SuperService {
     boolean updateBook(final BookDto dto) throws SQLException;
     BookDto searchBook(String id) throws SQLException;
     List<BranchDto> loadAllBranches() throws SQLException;
+    boolean updateBookStatus(String bookId, String status) throws SQLException;
 }

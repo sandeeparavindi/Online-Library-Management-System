@@ -2,12 +2,19 @@ package org.example.service.Custom.Impl;
 
 import org.example.dto.BookDto;
 import org.example.dto.BorrowingBookDto;
+import org.example.dto.BranchDto;
 import org.example.entity.Book;
+import org.example.entity.BorrowingBook;
+import org.example.entity.Branch;
 import org.example.repository.Custom.BookRepository;
 import org.example.repository.Custom.BorrowingBookRepository;
 import org.example.repository.Custom.UserRepository;
 import org.example.repository.RepositoryFactory;
+import org.example.service.Custom.BookService;
 import org.example.service.Custom.BorrowingBookService;
+import org.example.tm.BorrowingBookTm;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,9 +31,34 @@ public class BorrowingBookServiceImpl implements BorrowingBookService {
     BorrowingBookRepository borrowingBookRepository = (BorrowingBookRepository) RepositoryFactory
             .getRepositoryFactory().getRepo(RepositoryFactory.RepositoryTypes.BORROWING_BOOK);
 
+
     @Override
     public String generateNextBorrowingBookId() throws SQLException {
         return borrowingBookRepository.generateNextBorrowingId();
+    }
+
+
+    @Override
+    public boolean addBorrowBook(BorrowingBookDto dto) throws SQLException {
+        BorrowingBook borrowingBook = new BorrowingBook(dto.getBorrowing_id(), dto.getTittle(), dto.getDueDate());
+        return borrowingBookRepository.add(borrowingBook);
+    }
+
+    @Override
+    public List<BorrowingBookDto> loadAllBorrowBook() throws SQLException {
+        List<BorrowingBook> allBook = borrowingBookRepository.loadAll();
+        List<BorrowingBookDto> borrowingBookDtos = new ArrayList<>();
+
+        for (BorrowingBook entity: allBook) {
+            borrowingBookDtos.add(
+                    new BorrowingBookDto(
+                            entity.getBorrowing_id(),
+                            entity.getTittle(),
+                            entity.getDueDate()
+                    )
+            );
+        }
+        return borrowingBookDtos;
     }
 
     @Override
@@ -60,8 +92,4 @@ public class BorrowingBookServiceImpl implements BorrowingBookService {
         );
     }
 
-    @Override
-    public boolean BorrowBook(BorrowingBookDto bookDto) throws SQLException {
-        return false;
-    }
 }

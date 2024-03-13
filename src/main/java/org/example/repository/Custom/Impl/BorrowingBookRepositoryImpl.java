@@ -1,28 +1,29 @@
 package org.example.repository.Custom.Impl;
 
-import org.example.entity.Book;
 import org.example.entity.BorrowingBook;
 import org.example.repository.Custom.BorrowingBookRepository;
 import org.example.util.SessionFactoryConfig;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class BorrowingBookImpl implements BorrowingBookRepository {
+public class BorrowingBookRepositoryImpl implements BorrowingBookRepository {
     @Override
     public boolean add(BorrowingBook entity) throws SQLException {
         try (Session session = SessionFactoryConfig.getInstance().getSession()) {
             Transaction transaction = session.beginTransaction();
             try {
+                entity.setBorrowing_id(generateNextBorrowingId());
                 session.save(entity);
                 transaction.commit();
                 return true;
             } catch (Exception e) {
                 transaction.rollback();
-                throw new SQLException("Failed", e);
+                throw new SQLException("Failed to add borrowing book", e);
             }
         }
     }
@@ -60,28 +61,36 @@ public class BorrowingBookImpl implements BorrowingBookRepository {
     }
 
     @Override
+        public String splitBorrowingId(String currentOrderId) {
+            if (currentOrderId != null) {
+         int id = Integer.parseInt(currentOrderId.substring(1)) + 1;
+            return "B" + String.format("%03d", id);
+      }
+        return "B001";
+    }
+
+    @Override
     public String generateNextBorrowingId() throws SQLException {
         try (Session session = SessionFactoryConfig.getInstance().getSession()) {
             Transaction transaction = session.beginTransaction();
             try {
-                Query query = session.createQuery("SELECT MAX(id) FROM BorrowingBook");
-                Integer maxId = (Integer) query.uniqueResult();
+                Query query = session.createQuery("SELECT MAX(borrowing_id) FROM BorrowingBook");
+                String maxId = (String) query.uniqueResult();
                 transaction.commit();
-                return splitBorrowingId(maxId != null ? maxId.toString() : null);
+
+                if (maxId == null || maxId.isEmpty()) {
+                    return "B001";
+                } else {
+                    return splitBorrowingId(maxId);
+                }
             } catch (Exception e) {
-                transaction.rollback();
+                if (transaction.isActive()) {
+                    transaction.rollback();
+                }
                 throw new SQLException("Failed to generate next borrowing ID", e);
             }
         }
     }
 
-    @Override
-    public String splitBorrowingId(String currentOrderId) {
-        if (currentOrderId != null) {
-            int id = Integer.parseInt(currentOrderId) + 1;
-            return "B" + String.format("%03d", id);
-        }
-        return "B001";
-    }
 
 }

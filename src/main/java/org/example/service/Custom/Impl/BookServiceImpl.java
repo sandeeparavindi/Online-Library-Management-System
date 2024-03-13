@@ -105,5 +105,10 @@ public class BookServiceImpl implements BookService {
         return branchDtoList;
     }
 
+    @Override
+    public boolean updateBookStatus(String bookId, String status) throws SQLException {
+        return bookRepository.updateStatus(bookId, status);
+    }
+
 }
 

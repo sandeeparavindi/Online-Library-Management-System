@@ -24,6 +24,7 @@ public class BorrowingBook {
     @Column(name = "due_date")
     private String dueDate;
 
+
     @ToString.Exclude
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER )
     @JoinColumn(name = "book_id"
