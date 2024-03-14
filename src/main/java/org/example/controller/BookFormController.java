@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import com.jfoenix.controls.JFXComboBox;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,6 +16,8 @@ import org.example.tm.BookTm;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Pattern;
 
 public class BookFormController {
@@ -57,10 +60,24 @@ public class BookFormController {
     BookService bookService = (BookService) ServiceFactory.getServiceFactory()
             .getService(ServiceFactory.ServiceTypes.BOOK);
 
+
     public void initialize() {
         setCellValueFactory();
         loadAllBooks();
         loadAllBranchNames();
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    try {
+                        updateBookStatusInTable();
+                    } catch (SQLException e) {
+                        new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+                    }
+                });
+            }
+        }, 0, 5000);
     }
 
     private void setCellValueFactory(){
@@ -71,6 +88,26 @@ public class BookFormController {
         colBranch.setCellValueFactory(new PropertyValueFactory<>("branch"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
+    }
+
+    private void updateBookStatusInTable() throws SQLException {
+        List<BookDto> bookDtoList = bookService.getAllBooks();
+        ObservableList<BookTm> obList = FXCollections.observableArrayList();
+
+        for (BookDto dto : bookDtoList) {
+            String status = dto.getStatus();
+            var tm = new BookTm(
+                    dto.getId(),
+                    dto.getTittle(),
+                    dto.getGenre(),
+                    dto.getAuthor(),
+                    dto.getBranch(),
+                    status
+            );
+            obList.add(tm);
+        }
+
+        tblBook.setItems(obList);
     }
 
     private void loadAllBooks() {
@@ -194,16 +231,27 @@ public class BookFormController {
         String branch = cmbBranchName.getValue();
         String status = "Available";
 
-        var dto = new BookDto(id, tittle, genre, author, branch,status);
+        var dto = new BookDto(id, tittle, genre, author, branch, status);
 
         try {
             boolean isUpdated = bookService.updateBook(dto);
             System.out.println(isUpdated);
-            if(isUpdated) {
+            if (isUpdated) {
                 new Alert(Alert.AlertType.CONFIRMATION, "book updated!").show();
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
+    }
+
+
+    private void updateStatusInUI(int bookId, String status) {
+        ObservableList<BookTm> items = tblBook.getItems();
+        for (BookTm bookTm : items) {
+            if (bookTm.getId() == bookId) {
+                bookTm.setStatus(status);
+                break;
+            }
         }
 
     }

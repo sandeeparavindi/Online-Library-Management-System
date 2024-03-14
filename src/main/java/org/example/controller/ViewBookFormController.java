@@ -1,10 +1,12 @@
 package org.example.controller;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -18,6 +20,8 @@ import org.example.tm.BookTm;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ViewBookFormController {
     @FXML
@@ -50,6 +54,39 @@ public class ViewBookFormController {
     public void initialize() {
         setCellValueFactory();
         loadAllBooks();
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    try {
+                        updateBookStatusInTable();
+                    } catch (SQLException e) {
+                        new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+                    }
+                });
+            }
+        }, 0, 5000);
+    }
+
+    private void updateBookStatusInTable() throws SQLException {
+        List<BookDto> bookDtoList = bookService.getAllBooks();
+        ObservableList<BookTm> obList = FXCollections.observableArrayList();
+
+        for (BookDto dto : bookDtoList) {
+            String status = dto.getStatus();
+            var tm = new BookTm(
+                    dto.getId(),
+                    dto.getTittle(),
+                    dto.getGenre(),
+                    dto.getAuthor(),
+                    dto.getBranch(),
+                    status
+            );
+            obList.add(tm);
+        }
+
+        tblBook.setItems(obList);
     }
 
     private void setCellValueFactory(){
@@ -69,16 +106,7 @@ public class ViewBookFormController {
             List<BookDto> dtoList = bookService.getAllBooks();
 
             for (BookDto dto : dtoList) {
-//                obList.add(
-//                        new BookTm(
-//                                dto.getId(),
-//                                dto.getTittle(),
-//                                dto.getGenre(),
-//                                dto.getAuthor(),
-//                                dto.getBranch()
-//                        )
-//                );
-//                Button btn = new Button("Available");
+
                 String status = "Available";
                 var tm = new BookTm(
                         dto.getId(),
@@ -87,7 +115,6 @@ public class ViewBookFormController {
                         dto.getAuthor(),
                         dto.getBranch(),
                         status
-//                        btn
                 );
                 obList.add(tm);
             }
