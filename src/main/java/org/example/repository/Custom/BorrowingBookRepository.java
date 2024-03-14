@@ -11,4 +11,5 @@ import java.util.List;
 public interface BorrowingBookRepository extends CrudRepository<BorrowingBook> {
     String generateNextBorrowingId() throws SQLException;
     String splitBorrowingId(String currentOrderId);
+    boolean returnBook(String borrowingId) throws SQLException;
 }

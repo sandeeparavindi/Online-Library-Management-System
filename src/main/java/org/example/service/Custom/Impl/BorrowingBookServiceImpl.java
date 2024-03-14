@@ -76,6 +76,11 @@ public class BorrowingBookServiceImpl implements BorrowingBookService {
     }
 
     @Override
+    public boolean returnBook(String borrowingId) throws SQLException {
+        return borrowingBookRepository.returnBook(borrowingId);
+    }
+
+    @Override
     public List<BookDto> loadAllBook() throws SQLException {
         List<Book> bookList = bookRepository.loadAll();
         List<BookDto> bookDtoList = new ArrayList<>();

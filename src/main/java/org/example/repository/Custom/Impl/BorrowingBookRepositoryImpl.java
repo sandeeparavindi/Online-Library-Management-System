@@ -70,6 +70,24 @@ public class BorrowingBookRepositoryImpl implements BorrowingBookRepository {
     }
 
     @Override
+    public boolean returnBook(String borrowingId) throws SQLException {
+        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+            try {
+                BorrowingBook borrowingBook = session.get(BorrowingBook.class, borrowingId);
+                if (borrowingBook != null) {
+                    session.delete(borrowingBook);
+                }
+                transaction.commit();
+                return true;
+            } catch (Exception e) {
+                transaction.rollback();
+                throw new SQLException("Failed to return the book", e);
+            }
+        }
+    }
+
+    @Override
     public String generateNextBorrowingId() throws SQLException {
         try (Session session = SessionFactoryConfig.getInstance().getSession()) {
             Transaction transaction = session.beginTransaction();

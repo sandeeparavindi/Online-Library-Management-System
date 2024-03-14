@@ -21,5 +21,6 @@ public interface BorrowingBookService extends SuperService {
 
     List<BorrowingBookDto> loadAllBorrowBook() throws SQLException;
     List<UserDto> loadAllUser() throws SQLException;
+    boolean returnBook(String borrowingId) throws SQLException;
 
 }

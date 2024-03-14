@@ -80,16 +80,6 @@ public class BookFormController {
             List<BookDto> dtoList = bookService.getAllBooks();
 
             for (BookDto dto : dtoList) {
-//                obList.add(
-//                        new BookTm(
-//                                dto.getId(),
-//                                dto.getTittle(),
-//                                dto.getGenre(),
-//                                dto.getAuthor(),
-//                                dto.getBranch()
-//                        )
-//                );
-//                Button btn = new Button("Available");
                 String status = "Available";
                 var tm = new BookTm(
                         dto.getId(),
@@ -98,7 +88,6 @@ public class BookFormController {
                         dto.getAuthor(),
                         dto.getBranch(),
                         status
-//                        btn
                 );
                 obList.add(tm);
             }

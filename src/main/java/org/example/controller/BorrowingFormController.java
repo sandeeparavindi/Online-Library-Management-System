@@ -14,6 +14,7 @@ import org.example.dto.BookDto;
 import org.example.dto.BorrowingBookDto;
 
 import org.example.service.Custom.BorrowingBookService;
+import org.example.service.Custom.BookService;
 import org.example.service.ServiceFactory;
 import org.example.tm.BorrowingBookTm;
 
@@ -65,6 +66,8 @@ public class BorrowingFormController {
     BorrowingBookService borrowingBookService = (BorrowingBookService) ServiceFactory.getServiceFactory()
             .getService(ServiceFactory.ServiceTypes.BORROWING_BOOK);
 
+    private final BookService bookService = (BookService) ServiceFactory.getServiceFactory()
+            .getService(ServiceFactory.ServiceTypes.BOOK);
 
     public void initialize() {
         setCellValueFactory();
@@ -72,6 +75,7 @@ public class BorrowingFormController {
         setDate();
         loadBookTittle();
         loadBorrowingBooks();
+//        updateBookStatus();
     }
 
     private void setCellValueFactory() {
@@ -106,7 +110,7 @@ public class BorrowingFormController {
         try {
             List<BookDto> bookDtos = borrowingBookService.loadAllBook();
 
-            for (BookDto bookDto: bookDtos) {
+            for (BookDto bookDto : bookDtos) {
                 obList.add(bookDto.getTittle());
             }
             cmbBookTittle.setItems(obList);
@@ -127,52 +131,91 @@ public class BorrowingFormController {
         String dueDate = lblDueDate.getText();
         int book_id = Integer.parseInt(lblBookId.getText());
 
-
         BorrowingBookDto bookDto = new BorrowingBookDto(
-            borrowing_id,
-            tittle,
-            dueDate,
-            book_id
-    );
+                borrowing_id,
+                tittle,
+                dueDate,
+                book_id
+        );
 
-    boolean isSaved = borrowingBookService.addBorrowBook(bookDto);
-    if (isSaved) {
-        new Alert(Alert.AlertType.CONFIRMATION,"saved").show();
-
-        loadBorrowingBooks();
-    } else {
-        new Alert(Alert.AlertType.ERROR, "can't saved").show();
+        boolean isAvailable = checkBookAvailability(book_id);
+        if (isAvailable) {
+            boolean isSaved = borrowingBookService.addBorrowBook(bookDto);
+            if (isSaved) {
+                new Alert(Alert.AlertType.CONFIRMATION, "Book borrowed successfully.").show();
+                updateBookStatus(book_id, "Unavailable");
+                loadBorrowingBooks();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Failed to borrow the book.").show();
+            }
+        } else {
+            new Alert(Alert.AlertType.ERROR, "The selected book is not available.").show();
+        }
     }
-}
+
+    private boolean checkBookAvailability(int book_id) throws SQLException {
+        BookDto bookDto = bookService.searchBook(String.valueOf(book_id));
+        return bookDto.getStatus().equals("Available");
+    }
 
     private void loadBorrowingBooks() {
-        try {
+         try {
             List<BorrowingBookDto> borrowingBooks = borrowingBookService.loadAllBorrowBook();
             tblBorrowingBooks.getItems().clear();
 
             for (BorrowingBookDto dto : borrowingBooks) {
-                Button btn = new Button("Return");
-                btn.setCursor(Cursor.HAND);
+                 Button btn = new Button("Return");
+                 btn.setCursor(Cursor.HAND);
 
-                btn.setOnAction(event -> {
+            btn.setOnAction(event -> {
+                BorrowingBookTm selectedBook = tblBorrowingBooks.getSelectionModel().getSelectedItem();
+                if (selectedBook != null) {
+                    try {
+                        boolean isReturned = borrowingBookService.returnBook(selectedBook.getBorrowing_id());
+                        if (isReturned) {
+                            updateBookStatus(selectedBook.getBook_id(), "Available");
+                            new Alert(Alert.AlertType.CONFIRMATION, "Book returned successfully.").show();
 
-                    new Alert(Alert.AlertType.INFORMATION, "Book returned: " + dto.getTittle()).show();
-                });
+                            loadBorrowingBooks();
+                        } else {
+                            new Alert(Alert.AlertType.ERROR, "Failed to return the book.").show();
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Please select a book to return.").show();
+                }
 
-                BorrowingBookTm tm = new BorrowingBookTm(
-                        dto.getBorrowing_id(),
-                        dto.getTittle(),
-                        dto.getDueDate(),
-                        dto.getBook_id(),
-                        btn
-                );
+            });
 
-                tblBorrowingBooks.getItems().add(tm);
-            }
+            BorrowingBookTm tm = new BorrowingBookTm(
+                    dto.getBorrowing_id(),
+                    dto.getTittle(),
+                    dto.getDueDate(),
+                    dto.getBook_id(),
+                    btn
+            );
+
+            tblBorrowingBooks.getItems().add(tm);
+            updateBookStatus(dto.getBook_id(), "Unavailable");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+}
+
+
+    private void updateBookStatus(int bookId, String status) {
+        try {
+            BookDto bookDto = bookService.searchBook(String.valueOf(bookId));
+            bookDto.setStatus(status);
+            bookService.updateBook(bookDto);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 
     @FXML
     void btnViewBookOnAction(ActionEvent event) throws IOException {
