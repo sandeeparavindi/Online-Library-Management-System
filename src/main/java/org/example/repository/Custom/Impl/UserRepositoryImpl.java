@@ -1,5 +1,6 @@
 package org.example.repository.Custom.Impl;
 
+import org.example.entity.Branch;
 import org.example.entity.User;
 import org.example.repository.Custom.UserRepository;
 import org.example.util.SessionFactoryConfig;
@@ -38,7 +39,18 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> loadAll() throws SQLException {
-        return null;
+        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+            try {
+                Query<User> query = session.createQuery("FROM User", User.class);
+                List<User> allUsers = query.getResultList();
+                transaction.commit();
+                return allUsers;
+            } catch (Exception e) {
+                transaction.rollback();
+                throw new SQLException("Failed to get all users", e);
+            }
+        }
     }
 
     @Override

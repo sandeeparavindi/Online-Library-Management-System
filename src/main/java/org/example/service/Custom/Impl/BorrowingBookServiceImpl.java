@@ -2,19 +2,15 @@ package org.example.service.Custom.Impl;
 
 import org.example.dto.BookDto;
 import org.example.dto.BorrowingBookDto;
-import org.example.dto.BranchDto;
+import org.example.dto.UserDto;
 import org.example.entity.Book;
 import org.example.entity.BorrowingBook;
-import org.example.entity.Branch;
+import org.example.entity.User;
 import org.example.repository.Custom.BookRepository;
 import org.example.repository.Custom.BorrowingBookRepository;
 import org.example.repository.Custom.UserRepository;
 import org.example.repository.RepositoryFactory;
-import org.example.service.Custom.BookService;
 import org.example.service.Custom.BorrowingBookService;
-import org.example.tm.BorrowingBookTm;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,21 +18,19 @@ import java.util.List;
 
 public class BorrowingBookServiceImpl implements BorrowingBookService {
 
-    UserRepository userRepository = (UserRepository) RepositoryFactory.getRepositoryFactory()
-            .getRepo(RepositoryFactory.RepositoryTypes.USER);
-
     BookRepository bookRepository = (BookRepository) RepositoryFactory.getRepositoryFactory()
             .getRepo(RepositoryFactory.RepositoryTypes.BOOK);
 
     BorrowingBookRepository borrowingBookRepository = (BorrowingBookRepository) RepositoryFactory
             .getRepositoryFactory().getRepo(RepositoryFactory.RepositoryTypes.BORROWING_BOOK);
 
+    UserRepository userRepository = (UserRepository) RepositoryFactory.getRepositoryFactory()
+            .getRepo(RepositoryFactory.RepositoryTypes.USER);
 
     @Override
     public String generateNextBorrowingBookId() throws SQLException {
         return borrowingBookRepository.generateNextBorrowingId();
     }
-
 
     @Override
     public boolean addBorrowBook(BorrowingBookDto dto) throws SQLException {
@@ -50,15 +44,35 @@ public class BorrowingBookServiceImpl implements BorrowingBookService {
         List<BorrowingBookDto> borrowingBookDtos = new ArrayList<>();
 
         for (BorrowingBook entity: allBook) {
-            borrowingBookDtos.add(
-                    new BorrowingBookDto(
-                            entity.getBorrowing_id(),
-                            entity.getTittle(),
-                            entity.getDueDate()
+            Book book = bookRepository.searchByTitle(entity.getTittle());
+
+            borrowingBookDtos.add(new BorrowingBookDto(
+                    entity.getBorrowing_id(),
+                    entity.getTittle(),
+                    entity.getDueDate(),
+                    book.getId()
+
+
+            ));
+        }
+        return borrowingBookDtos;
+    }
+
+    @Override
+    public List<UserDto> loadAllUser() throws SQLException {
+        List<User> userList = userRepository.loadAll();
+        List<UserDto> userDtoList = new ArrayList<>();
+
+        for (User entity : userList) {
+            userDtoList.add(
+                    new UserDto(
+                            entity.getEmail(),
+                            entity.getName(),
+                            entity.getPassword()
                     )
             );
         }
-        return borrowingBookDtos;
+        return userDtoList;
     }
 
     @Override
@@ -91,5 +105,4 @@ public class BorrowingBookServiceImpl implements BorrowingBookService {
                 entity.getStatus()
         );
     }
-
 }

@@ -1,13 +1,8 @@
 package org.example.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @NoArgsConstructor
 @Data
@@ -18,14 +13,16 @@ public class BorrowingBookDto {
     private String dueDate;
 
     @ToString.Exclude
-    private String book_id;
-    @ToString.Exclude
-    private String email;
+    private int book_id;
+//    @ToString.Exclude
+//    private String email;
 
-    public BorrowingBookDto(String borrowing_id, String tittle, String dueDate) {
+    public BorrowingBookDto(String borrowing_id, String title, String dueDate, int book_id) {
         this.borrowing_id = borrowing_id;
-        this.tittle = tittle;
+        this.tittle = title;
         this.dueDate = dueDate;
+        this.book_id = Integer.parseInt(String.valueOf(book_id));
     }
+
 
 }

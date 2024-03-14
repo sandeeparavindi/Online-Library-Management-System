@@ -7,10 +7,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.Cursor;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import org.example.dto.BookDto;
@@ -28,6 +26,8 @@ import java.util.List;
 
 public class BorrowingFormController {
 
+    private final ObservableList<BorrowingBookTm> obList = FXCollections.observableArrayList();
+
     @FXML
     private JFXComboBox<String> cmbBookTittle;
 
@@ -44,7 +44,7 @@ public class BorrowingFormController {
     private TableColumn<?, ?> colTittle;
 
     @FXML
-    private TableColumn<?, ?> colUserEmail;
+    private TableColumn<?, ?> colReturnBook;
 
     @FXML
     private Label lblBookId;
@@ -78,9 +78,9 @@ public class BorrowingFormController {
     private void setCellValueFactory() {
         colBorrowingId.setCellValueFactory(new PropertyValueFactory<>("borrowing_id"));
         colTittle.setCellValueFactory(new PropertyValueFactory<>("tittle"));
-        colDueDate.setCellValueFactory(new PropertyValueFactory<>("due-date"));
-        colBookId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colUserEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colDueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
+        colBookId.setCellValueFactory(new PropertyValueFactory<>("book_id"));
+        colReturnBook.setCellValueFactory(new PropertyValueFactory<>("btn"));
     }
 
     private void generateNextBorrowingBookId() {
@@ -126,21 +126,53 @@ public class BorrowingFormController {
         String borrowing_id = lblBorrowingId.getText();
         String tittle = cmbBookTittle.getValue();
         String dueDate = lblDueDate.getText();
+        int book_id = Integer.parseInt(lblBookId.getText());
+
 
         BorrowingBookDto bookDto = new BorrowingBookDto(
-                borrowing_id,
-                tittle,
-                dueDate
-        );
+            borrowing_id,
+            tittle,
+            dueDate,
+            book_id
+//            email
+    );
 
+    boolean isSaved = borrowingBookService.addBorrowBook(bookDto);
+    if (isSaved) {
+        new Alert(Alert.AlertType.CONFIRMATION,"saved").show();
 
-        boolean isSaved = borrowingBookService.addBorrowBook(bookDto);
-        if (isSaved) {
-            new Alert(Alert.AlertType.CONFIRMATION,"saved").show();
-        } else {
-            new Alert(Alert.AlertType.ERROR, "can't saved").show();
+        loadBorrowingBooks();
+    } else {
+        new Alert(Alert.AlertType.ERROR, "can't saved").show();
+    }
+}
+
+    private void loadBorrowingBooks() {
+        try {
+            List<BorrowingBookDto> borrowingBooks = borrowingBookService.loadAllBorrowBook();
+            Button btn = new Button("Return");
+            btn.setCursor(Cursor.HAND);
+
+            tblBorrowingBooks.getItems().clear();
+
+            for (BorrowingBookDto dto : borrowingBooks) {
+                BorrowingBookTm tm = new BorrowingBookTm(
+                        dto.getBorrowing_id(),
+                        dto.getTittle(),
+                        dto.getDueDate(),
+                        dto.getBook_id(),
+                        btn
+//                        dto.getEmail()
+                );
+
+                tblBorrowingBooks.getItems().add(tm);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
+
+
 
     @FXML
     void btnViewBookOnAction(ActionEvent event) throws IOException {

@@ -1,5 +1,6 @@
 package org.example.tm;
 
+import javafx.scene.control.Button;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,6 @@ public class BorrowingBookTm {
     private String borrowing_id;
     private String tittle;
     private String dueDate;
-    private String book_id;
-    private String email;
+    private int book_id;
+    private Button btn;
 }
