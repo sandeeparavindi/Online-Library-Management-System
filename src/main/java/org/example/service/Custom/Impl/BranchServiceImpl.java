@@ -71,4 +71,18 @@ public class BranchServiceImpl implements BranchService {
                 entity.getLocation()
         );
     }
+
+    @Override
+    public BranchDto searchBranchByName(String name) throws SQLException {
+        Branch branch = branchRepository.searchByName(name);
+        if (branch != null) {
+            return new BranchDto(
+                    branch.getCode(),
+                    branch.getName(),
+                    branch.getManager(),
+                    branch.getLocation()
+            );
+        }
+        return null;
+    }
 }

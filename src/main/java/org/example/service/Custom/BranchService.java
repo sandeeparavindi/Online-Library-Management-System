@@ -14,4 +14,5 @@ public interface BranchService extends SuperService {
     boolean deleteBranch(String code) throws SQLException;
     boolean updateBranch(final BranchDto dto) throws SQLException;
     BranchDto searchBranch(String code) throws SQLException;
+    BranchDto searchBranchByName(String name) throws SQLException;
 }

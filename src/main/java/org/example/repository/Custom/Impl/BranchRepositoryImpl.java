@@ -86,4 +86,21 @@ public class BranchRepositoryImpl implements BranchRepository {
     public String totalBranchCount() throws SQLException {
         return null;
     }
+
+    @Override
+    public Branch searchByName(String name) throws SQLException {
+        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+            try {
+                Query<Branch> query = session.createQuery("FROM Branch WHERE name = :name", Branch.class);
+                query.setParameter("name", name);
+                Branch branch = query.uniqueResult();
+                transaction.commit();
+                return branch;
+            } catch (Exception e) {
+                transaction.rollback();
+                throw new SQLException("Failed to search for branch by name", e);
+            }
+        }
+    }
 }

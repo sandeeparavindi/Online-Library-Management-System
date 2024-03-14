@@ -7,4 +7,6 @@ import java.sql.SQLException;
 
 public interface BranchRepository extends CrudRepository<Branch> {
     String totalBranchCount() throws SQLException;
+
+    Branch searchByName(String name) throws SQLException;
 }

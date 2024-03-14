@@ -37,7 +37,7 @@ public class Book {
     private String status;
 
     @ToString.Exclude
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branch_id")
     private Branch branches;
 

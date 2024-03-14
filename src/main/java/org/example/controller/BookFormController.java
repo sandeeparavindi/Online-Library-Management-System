@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.dto.BookDto;
 import org.example.dto.BranchDto;
 import org.example.service.Custom.BookService;
+import org.example.service.Custom.BranchService;
 import org.example.service.ServiceFactory;
 import org.example.tm.BookTm;
 
@@ -60,7 +61,8 @@ public class BookFormController {
     BookService bookService = (BookService) ServiceFactory.getServiceFactory()
             .getService(ServiceFactory.ServiceTypes.BOOK);
 
-
+    BranchService branchService = (BranchService) ServiceFactory.getServiceFactory().
+            getService(ServiceFactory.ServiceTypes.BRANCH);
     public void initialize() {
         setCellValueFactory();
         loadAllBooks();
@@ -134,40 +136,84 @@ public class BookFormController {
         }
     }
 
-    @FXML
-    void btnAddOnAction(ActionEvent event) {
-        boolean isBookIDValidated = ValidateBook();
-        boolean isBookTittleValidated = ValidateBook();
-        boolean isBookGenresValidated = ValidateBook();
-        boolean isBookAuthorValidated = ValidateBook();
+//    @FXML
+//    void btnAddOnAction(ActionEvent event) {
+//
+//        String branchName = cmbBranchName.getValue();
+//
+//        boolean isBookIDValidated = ValidateBook();
+//        boolean isBookTittleValidated = ValidateBook();
+//        boolean isBookGenresValidated = ValidateBook();
+//        boolean isBookAuthorValidated = ValidateBook();
+//
+//        if (isBookIDValidated
+//        && isBookTittleValidated
+//        && isBookGenresValidated
+//        && isBookAuthorValidated) {
+//
+//
+//            int id = Integer.parseInt(txtId.getText());
+//            String tittle = txtTittle.getText();
+//            String genre = txtGenre.getText();
+//            String author = txtAuthor.getText();
+//            String branch = cmbBranchName.getValue();
+//            String status = "Available";
+//
+//            var dto = new BookDto(id, tittle, genre, author, branch, status);
+//
+//            try {
+//                boolean isAdd = bookService.addBook(dto);
+//                if (isAdd) {
+//                    new Alert(Alert.AlertType.CONFIRMATION, "Added Book!").show();
+//                    clearFields();
+//                }
+//
+//            } catch (SQLException e){
+//                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+//            }
+//        }
+//
+//    }
+@FXML
+void btnAddOnAction(ActionEvent event) {
+    String branchName = cmbBranchName.getValue();
 
-        if (isBookIDValidated
-        && isBookTittleValidated
-        && isBookGenresValidated
-        && isBookAuthorValidated) {
+    boolean isBookIDValidated = ValidateBook();
+    boolean isBookTittleValidated = ValidateBook();
+    boolean isBookGenresValidated = ValidateBook();
+    boolean isBookAuthorValidated = ValidateBook();
+
+    if (isBookIDValidated
+            && isBookTittleValidated
+            && isBookGenresValidated
+            && isBookAuthorValidated) {
+
+        try {
+            BranchDto branchDto = branchService.searchBranchByName(branchName);
+            if (branchDto == null) {
+                new Alert(Alert.AlertType.ERROR, "Selected branch not found!").show();
+                return;
+            }
 
             int id = Integer.parseInt(txtId.getText());
             String tittle = txtTittle.getText();
             String genre = txtGenre.getText();
             String author = txtAuthor.getText();
-            String branch = cmbBranchName.getValue();
             String status = "Available";
 
-            var dto = new BookDto(id, tittle, genre, author, branch, status);
+            var dto = new BookDto(id, tittle, genre, author, branchDto.getName(), status);
 
-            try {
-                boolean isAdd = bookService.addBook(dto);
-                if (isAdd) {
-                    new Alert(Alert.AlertType.CONFIRMATION, "Added Book!").show();
-                    clearFields();
-                }
-
-            } catch (SQLException e){
-                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+            boolean isAdd = bookService.addBook(dto);
+            if (isAdd) {
+                new Alert(Alert.AlertType.CONFIRMATION, "Added Book!").show();
+                clearFields();
             }
-        }
 
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
+        }
     }
+}
 
     private boolean ValidateBook(){
 

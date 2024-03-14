@@ -14,8 +14,8 @@ public class BorrowingBookDto {
 
     @ToString.Exclude
     private int book_id;
-//    @ToString.Exclude
-//    private String email;
+    @ToString.Exclude
+    private String email;
 
     public BorrowingBookDto(String borrowing_id, String title, String dueDate, int book_id) {
         this.borrowing_id = borrowing_id;
