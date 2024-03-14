@@ -1,6 +1,5 @@
 package org.example.controller;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,8 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import org.example.dto.BookDto;
 import org.example.dto.BorrowingBookDto;
-import org.example.repository.Custom.BookRepository;
-import org.example.repository.RepositoryFactory;
+
 import org.example.service.Custom.BorrowingBookService;
 import org.example.service.ServiceFactory;
 import org.example.tm.BorrowingBookTm;
@@ -73,6 +71,7 @@ public class BorrowingFormController {
         generateNextBorrowingBookId();
         setDate();
         loadBookTittle();
+        loadBorrowingBooks();
     }
 
     private void setCellValueFactory() {
@@ -134,7 +133,6 @@ public class BorrowingFormController {
             tittle,
             dueDate,
             book_id
-//            email
     );
 
     boolean isSaved = borrowingBookService.addBorrowBook(bookDto);
@@ -150,19 +148,23 @@ public class BorrowingFormController {
     private void loadBorrowingBooks() {
         try {
             List<BorrowingBookDto> borrowingBooks = borrowingBookService.loadAllBorrowBook();
-            Button btn = new Button("Return");
-            btn.setCursor(Cursor.HAND);
-
             tblBorrowingBooks.getItems().clear();
 
             for (BorrowingBookDto dto : borrowingBooks) {
+                Button btn = new Button("Return");
+                btn.setCursor(Cursor.HAND);
+
+                btn.setOnAction(event -> {
+
+                    new Alert(Alert.AlertType.INFORMATION, "Book returned: " + dto.getTittle()).show();
+                });
+
                 BorrowingBookTm tm = new BorrowingBookTm(
                         dto.getBorrowing_id(),
                         dto.getTittle(),
                         dto.getDueDate(),
                         dto.getBook_id(),
                         btn
-//                        dto.getEmail()
                 );
 
                 tblBorrowingBooks.getItems().add(tm);
@@ -171,8 +173,6 @@ public class BorrowingFormController {
             e.printStackTrace();
         }
     }
-
-
 
     @FXML
     void btnViewBookOnAction(ActionEvent event) throws IOException {
