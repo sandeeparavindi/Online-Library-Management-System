@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="800.0" prefWidth="877.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.HistoryFormController">
+   <children>
+      <ImageView fitHeight="800.0" fitWidth="877.0">
+         <image>
+            <Image url="@../assets/12.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="48.0" layoutY="49.0" text="Welcome to View Details">
+         <font>
+            <Font name="Times New Roman Bold" size="22.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tblDetails" layoutX="60.0" layoutY="136.0" opacity="0.89" prefHeight="598.0" prefWidth="752.0">
+        <columns>
+          <TableColumn fx:id="colUserName" prefWidth="116.0" text="User Name" />
+          <TableColumn fx:id="colBorrowingId" prefWidth="123.0" text="Borrowing Id" />
+            <TableColumn fx:id="colBookId" prefWidth="162.0" text="Book ID" />
+            <TableColumn fx:id="colTittle" prefWidth="193.0" text="Book Tittle" />
+            <TableColumn fx:id="colStatus" prefWidth="157.0" text="Status" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

@@ -1,9 +1,6 @@
 package org.example.repository;
 
-import org.example.repository.Custom.Impl.BookRepositoryImpl;
-import org.example.repository.Custom.Impl.BorrowingBookRepositoryImpl;
-import org.example.repository.Custom.Impl.BranchRepositoryImpl;
-import org.example.repository.Custom.Impl.UserRepositoryImpl;
+import org.example.repository.Custom.Impl.*;
 
 public class RepositoryFactory {
     private static volatile RepositoryFactory repositoryFactory;
@@ -22,7 +19,7 @@ public class RepositoryFactory {
     }
 
     public enum RepositoryTypes {
-        USER, BOOK, BRANCH, BORROWING_BOOK
+        USER, BOOK, BRANCH, BORROWING_BOOK, QUERY
     }
 
     public SuperRepository getRepo(RepositoryTypes type) {
@@ -35,6 +32,8 @@ public class RepositoryFactory {
                 return new BranchRepositoryImpl();
             case BORROWING_BOOK:
                 return new BorrowingBookRepositoryImpl();
+            case QUERY:
+                return new QueryRepositoryImpl();
             default:
                 throw new IllegalArgumentException("Unknown repository type: " + type);
         }

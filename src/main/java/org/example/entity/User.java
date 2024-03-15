@@ -16,7 +16,6 @@ import java.util.List;
 @Data
 
 public class User {
-
     @Id
     @Column(name = "email")
     private String email;
@@ -27,8 +26,7 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @ToString.Exclude
-    @OneToMany(targetEntity = BorrowingBook.class, mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<BorrowingBook> borrowingBookList = new ArrayList<>();
 
     public User(String email, String name, String password) {

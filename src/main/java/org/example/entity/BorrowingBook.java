@@ -17,32 +17,22 @@ import java.util.List;
 @Table(name = "borrowing_book")
 
 public class BorrowingBook {
-
     @Id
     @Column(name = "borrowing_id")
     private String borrowing_id;
 
-    @Column(name = "tittle")
+    @Column(name = "title")
     private String tittle;
 
     @Column(name = "due_date")
     private String dueDate;
 
-
-    @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER )
-    @JoinColumn(name = "book_id"
-    ,referencedColumnName = "book_id"
-    ,insertable = false
-    ,updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id")
     private Book book;
 
-    @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "email"
-    ,referencedColumnName = "email"
-    ,insertable = false
-    ,updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "email")
     private User user;
 
     public BorrowingBook(String borrowing_id, String tittle, String dueDate) {

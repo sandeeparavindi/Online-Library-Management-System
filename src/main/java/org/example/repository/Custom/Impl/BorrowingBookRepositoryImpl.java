@@ -40,7 +40,17 @@ public class BorrowingBookRepositoryImpl implements BorrowingBookRepository {
 
     @Override
     public BorrowingBook search(String id) throws SQLException {
-        return null;
+            try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+                Transaction transaction = session.beginTransaction();
+                try {
+                    BorrowingBook borrowingBook = session.get(BorrowingBook.class, id);
+                    transaction.commit();
+                    return borrowingBook;
+                } catch (Exception e) {
+                    transaction.rollback();
+                    throw new SQLException("Failed to search for borrowing book with ID: " + id, e);
+                }
+            }
     }
 
     @Override

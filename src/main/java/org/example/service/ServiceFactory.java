@@ -11,7 +11,7 @@ public class ServiceFactory {
     }
 
      public enum ServiceTypes{
-        SIGN_UP_FROM, SIGN_IN_FROM, BOOK, BRANCH, BORROWING_BOOK
+        SIGN_UP_FROM, SIGN_IN_FROM, BOOK, BRANCH, BORROWING_BOOK, HISTORY
      }
 
      public SuperService getService(ServiceTypes serviceTypes){
@@ -26,6 +26,8 @@ public class ServiceFactory {
                 return new BranchServiceImpl();
            case BORROWING_BOOK:
                 return new BorrowingBookServiceImpl();
+            case HISTORY:
+                return new QueryServiceImpl();
             default:
                 return null;
         }

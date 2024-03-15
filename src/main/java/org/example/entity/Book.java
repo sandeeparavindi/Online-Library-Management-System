@@ -21,7 +21,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "book_tittle")
+    @Column(name = "book_title")
     private String tittle;
 
     @Column(name = "genre")
@@ -36,14 +36,12 @@ public class Book {
     @Column(name = "status")
     private String status;
 
-    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branch_id")
     private Branch branches;
 
-    @ToString.Exclude
-    @OneToMany(mappedBy = "book", targetEntity = BorrowingBook.class)
-    List<Book> bookList = new ArrayList<>();
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    private List<BorrowingBook> borrowingBookList = new ArrayList<>();
 
     public Book(int id, String tittle, String genre, String author, String branch, String status) {
         this.id = id;

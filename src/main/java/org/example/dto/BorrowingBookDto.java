@@ -24,5 +24,4 @@ public class BorrowingBookDto {
         this.book_id = Integer.parseInt(String.valueOf(book_id));
     }
 
-
 }

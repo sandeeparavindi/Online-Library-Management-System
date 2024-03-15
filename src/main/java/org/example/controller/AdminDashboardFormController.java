@@ -48,8 +48,11 @@ public class AdminDashboardFormController {
     }
 
     @FXML
-    void btnHistoryOnAction(ActionEvent event) {
-
+    void btnHistoryOnAction(ActionEvent event) throws IOException {
+        this.pane.getChildren().clear();
+        this.pane.getChildren().add(
+                FXMLLoader.load(this.getClass().getResource("/view/History_form.fxml"))
+        );
     }
 
     @FXML

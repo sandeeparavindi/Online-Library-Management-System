@@ -104,8 +104,8 @@ public class SignInFormController {
     @FXML
     private TextField txtUserName;
 
-    private final String adminUserName = "admin";
-    private final String adminPassword = "a1234";
+    private final String adminUserName = "a";
+    private final String adminPassword = "a";
 
     SignInFormService signInFormService = (SignInFormService) ServiceFactory.getServiceFactory()
             .getService(ServiceFactory.ServiceTypes.SIGN_IN_FROM);
