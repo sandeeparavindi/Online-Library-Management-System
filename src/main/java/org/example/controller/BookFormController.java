@@ -136,54 +136,17 @@ public class BookFormController {
         }
     }
 
-//    @FXML
-//    void btnAddOnAction(ActionEvent event) {
-//
-//        String branchName = cmbBranchName.getValue();
-//
-//        boolean isBookIDValidated = ValidateBook();
-//        boolean isBookTittleValidated = ValidateBook();
-//        boolean isBookGenresValidated = ValidateBook();
-//        boolean isBookAuthorValidated = ValidateBook();
-//
-//        if (isBookIDValidated
-//        && isBookTittleValidated
-//        && isBookGenresValidated
-//        && isBookAuthorValidated) {
-//
-//
-//            int id = Integer.parseInt(txtId.getText());
-//            String tittle = txtTittle.getText();
-//            String genre = txtGenre.getText();
-//            String author = txtAuthor.getText();
-//            String branch = cmbBranchName.getValue();
-//            String status = "Available";
-//
-//            var dto = new BookDto(id, tittle, genre, author, branch, status);
-//
-//            try {
-//                boolean isAdd = bookService.addBook(dto);
-//                if (isAdd) {
-//                    new Alert(Alert.AlertType.CONFIRMATION, "Added Book!").show();
-//                    clearFields();
-//                }
-//
-//            } catch (SQLException e){
-//                new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
-//            }
-//        }
-//
-//    }
-@FXML
-void btnAddOnAction(ActionEvent event) {
-    String branchName = cmbBranchName.getValue();
 
-    boolean isBookIDValidated = ValidateBook();
-    boolean isBookTittleValidated = ValidateBook();
-    boolean isBookGenresValidated = ValidateBook();
-    boolean isBookAuthorValidated = ValidateBook();
+    @FXML
+    void btnAddOnAction(ActionEvent event) {
+        String branchName = cmbBranchName.getValue();
 
-    if (isBookIDValidated
+        boolean isBookIDValidated = ValidateBook();
+        boolean isBookTittleValidated = ValidateBook();
+        boolean isBookGenresValidated = ValidateBook();
+        boolean isBookAuthorValidated = ValidateBook();
+
+        if (isBookIDValidated
             && isBookTittleValidated
             && isBookGenresValidated
             && isBookAuthorValidated) {

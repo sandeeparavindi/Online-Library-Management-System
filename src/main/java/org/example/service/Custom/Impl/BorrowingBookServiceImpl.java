@@ -11,6 +11,9 @@ import org.example.repository.Custom.BorrowingBookRepository;
 import org.example.repository.Custom.UserRepository;
 import org.example.repository.RepositoryFactory;
 import org.example.service.Custom.BorrowingBookService;
+import org.example.util.SessionFactoryConfig;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,8 +38,55 @@ public class BorrowingBookServiceImpl implements BorrowingBookService {
     @Override
     public boolean addBorrowBook(BorrowingBookDto dto) throws SQLException {
         BorrowingBook borrowingBook = new BorrowingBook(dto.getBorrowing_id(), dto.getTittle(), dto.getDueDate());
+        Book book = bookRepository.searchByTitle(dto.getTittle());
+        User user = userRepository.searchUser(dto.getEmail());
+
+        borrowingBook.setBook(book);
+        borrowingBook.setUser(user);
         return borrowingBookRepository.add(borrowingBook);
     }
+
+
+//    @Override
+//    public boolean addBorrowBook(BorrowingBookDto dto) throws SQLException {
+//        try {
+//            Book book = bookRepository.searchByTitle(dto.getTittle());
+//            User user = userRepository.searchUser(dto.getEmail());
+//
+//            if (book == null || user == null) {
+//                System.err.println("Book or user not found.");
+//                return false;
+//            }
+//
+//            BorrowingBook borrowingBook = new BorrowingBook(dto.getBorrowing_id(), dto.getTittle(), dto.getDueDate());
+//            borrowingBook.setTittle(dto.getTittle());
+//            borrowingBook.setDueDate(dto.getDueDate());
+//            borrowingBook.setBook(book);
+//            borrowingBook.setUser(user);
+//
+//            Transaction transaction = null;
+//            try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+//                transaction = session.beginTransaction();
+//
+//                borrowingBookRepository.add(borrowingBook);
+//
+//                transaction.commit();
+//                return true;
+//            } catch (Exception e) {
+//                if (transaction != null) {
+//                    transaction.rollback();
+//                }
+//                e.printStackTrace();
+//                System.err.println("Error adding borrowing book: " + e.getMessage());
+//                return false;
+//            }
+//        } catch (SQLException ex) {
+//            System.err.println("SQL Exception: " + ex.getMessage());
+//            ex.printStackTrace();
+//            throw ex;
+//        }
+//    }
+
 
     @Override
     public List<BorrowingBookDto> loadAllBorrowBook() throws SQLException {
@@ -45,7 +95,8 @@ public class BorrowingBookServiceImpl implements BorrowingBookService {
 
         for (BorrowingBook entity: allBook) {
             Book book = bookRepository.searchByTitle(entity.getTittle());
-
+            entity.getBook();
+            entity.getUser();
             borrowingBookDtos.add(new BorrowingBookDto(
                     entity.getBorrowing_id(),
                     entity.getTittle(),

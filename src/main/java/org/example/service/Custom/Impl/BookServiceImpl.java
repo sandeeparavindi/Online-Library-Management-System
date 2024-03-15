@@ -28,8 +28,7 @@ public class BookServiceImpl implements BookService {
         List<BookDto> bookDtoList = new ArrayList<>();
 
         for (Book entity : allBooks) {
-            // Fetch the associated branch
-            entity.getBranches(); // This will trigger the lazy loading
+            entity.getBranches();
             bookDtoList.add(
                     new BookDto(
                             entity.getId(),
@@ -52,7 +51,6 @@ public class BookServiceImpl implements BookService {
         }
         Branch branch = branchRepository.searchByName(dto.getBranch());
         if (branch == null) {
-            // Handle case when branch doesn't exist
             return false;
         }
         Book entity = new Book(
@@ -63,7 +61,7 @@ public class BookServiceImpl implements BookService {
                 dto.getBranch(),
                 dto.getStatus()
         );
-        entity.setBranches(branch); // Set the branch for the book
+        entity.setBranches(branch);
         return bookRepository.add(entity);
     }
 

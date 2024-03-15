@@ -34,7 +34,18 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User search(String id) throws SQLException {
-        return null;
+            try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+                Transaction transaction = session.beginTransaction();
+                try {
+                    User user = session.get(User.class, id);
+                    transaction.commit();
+                    return user;
+                } catch (Exception e) {
+                    transaction.rollback();
+                    throw new SQLException("Failed to search for user by ID", e);
+                }
+            }
+
     }
 
     @Override
@@ -71,6 +82,23 @@ public class UserRepositoryImpl implements UserRepository {
             return !resultList.isEmpty();
         } finally {
             session.close();
+        }
+    }
+
+    @Override
+    public User searchUser(String email) throws SQLException {
+        try (Session session = SessionFactoryConfig.getInstance().getSession()) {
+            Transaction transaction = session.beginTransaction();
+            try {
+                Query<User> query = session.createQuery("FROM User WHERE email = :email", User.class);
+                query.setParameter("email", email);
+                User user = query.uniqueResult();
+                transaction.commit();
+                return user;
+            } catch (Exception e) {
+                transaction.rollback();
+                throw new SQLException("Failed to search for user by email", e);
+            }
         }
     }
 }

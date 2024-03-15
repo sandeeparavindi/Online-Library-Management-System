@@ -9,4 +9,5 @@ public interface UserRepository extends CrudRepository<User> {
 
     String getEmail(String email) throws SQLException, ClassNotFoundException;
     boolean isExistUser(String userName, String pw) throws SQLException, ClassNotFoundException;
+    User searchUser(String email) throws SQLException;
 }
